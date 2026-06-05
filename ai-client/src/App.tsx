@@ -4,6 +4,7 @@ import type { RootState } from './store/store'
 import Navbar from './components/Navbar'
 import Dashboard from './pages/Dashboard'
 import Auth from './pages/Auth'
+import CareerAI from './pages/CareerAI'
 import AiTerminalWidget from './components/AiTerminalWidget'
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <div className="container mt-4">
         <Routes>
           <Route path="/" element={user ? <Dashboard /> : <Navigate to="/auth" />} />
+          <Route path="/career" element={user ? <CareerAI /> : <Navigate to="/auth" />} />
           <Route path="/auth" element={!user ? <Auth /> : <Navigate to="/" />} />
         </Routes>
       </div>

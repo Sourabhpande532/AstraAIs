@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const authRoutes = require("./routes/authRoutes");
 const hrRoutes = require("./routes/hrRoutes");
 const aiRoutes = require("./routes/aiRoutes");
+const careerRoutes = require("./routes/careerRoutes");
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/hr", hrRoutes);
 app.use("/api/ai", aiRoutes);
+app.use("/api/career", careerRoutes);
 
 app.get("/", (req, res) => {
   res.json("Astra HR API is running...");
