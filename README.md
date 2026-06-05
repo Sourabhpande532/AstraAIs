@@ -8,9 +8,11 @@ Built with a React frontend, Express/Node backend, MongoDB database.
 
 ---
 
-## Demo Link
+## 🎥 Demo Video
+Please click on images it will take you to the google drive video. 
 
-[Live Demo](#)
+[![Watch the demo](assets/video.png)](https://drive.google.com/file/d/1P1Pq9k4xdWpSpqKXvu17sKcXCCcea0Fw/view?usp=sharing)
+
 
 ---
 
