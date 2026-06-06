@@ -9,7 +9,8 @@ Built with a React frontend, Express/Node backend, MongoDB database.
 ---
 
 ## 🎥 Demo Video
-Please click on images it will take you to the google drive video. 
+Watch a walkthrough (5-7 minutes) of all major features of this app
+Please click on images it will take you to the google drive video 👇
 
 [![Watch the demo](assets/video.png)](https://drive.google.com/file/d/1P1Pq9k4xdWpSpqKXvu17sKcXCCcea0Fw/view?usp=sharing)
 
@@ -37,13 +38,6 @@ npm run dev  # or `npm start` / `yarn dev`
 - MongoDB
 - Server-Sent Events (SSE)
 - RESTful APIs
-
----
-
-## Demo Video
-
-Watch a walkthrough (5-7 minutes) of all major features of this app: <br>
-[Drive Video Link](#)
 
 ---
 
