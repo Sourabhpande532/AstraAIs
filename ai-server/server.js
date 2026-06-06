@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
+const dns = require("dns");
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 const authRoutes = require("./routes/authRoutes");
 const hrRoutes = require("./routes/hrRoutes");
@@ -14,16 +16,9 @@ const app = express();
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      // Allow any localhost origin (covers 5173, 5174, etc.) or no origin (Postman/curl)
-      if (!origin || /^http:\/\/localhost:\d+$/.test(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: process.env.FRONTEND_URL,
     credentials: true,
-  })
+  }),
 );
 app.use(morgan("dev"));
 app.use(express.json());
@@ -41,10 +36,10 @@ app.get("/", (req, res) => {
 mongoose
   .connect(process.env.MONGO_URL || "mongodb://localhost:27017/astrahr")
   .then(() => {
-     console.log("DB Connected");
-     const PORT = process.env.PORT || 5001;
-     app.listen(PORT, () => {
-       console.log(`The server running at http://localhost:${PORT}`);
-     });
+    console.log("DB Connected");
+    const PORT = process.env.PORT || 5001;
+    app.listen(PORT, () => {
+      console.log(`The server running at http://localhost:${PORT}`);
+    });
   })
   .catch((err) => console.log("DB Connection Fail", err));
