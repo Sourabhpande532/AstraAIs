@@ -24,7 +24,8 @@ export const useTerminalStream = () => {
     abortRef.current = controller;
 
     try {
-      const resp = await fetch('/api/ai/chat/stream', {
+      const baseURL = import.meta.env.VITE_API_URL || '';
+      const resp = await fetch(`${baseURL}/api/ai/chat/stream`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${userToken}` },
         body: JSON.stringify({ message: query }),

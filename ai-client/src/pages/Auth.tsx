@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../store/authSlice';
-import axios from 'axios';
+import api from '../lib/api';
 import { useNavigate } from 'react-router-dom';
 import { FaUserShield } from 'react-icons/fa';
 
@@ -21,7 +21,7 @@ const Auth = () => {
     try {
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
       const payload = isLogin ? { email, password } : { name, email, password };
-      const res = await axios.post(endpoint, payload);
+      const res = await api.post(endpoint, payload);
       dispatch(setCredentials(res.data));
       navigate('/');
     } catch (err: any) {
@@ -31,7 +31,7 @@ const Auth = () => {
 
   const handleGuestLogin = async () => {
     try {
-      const res = await axios.post('/api/auth/guest');
+      const res = await api.post('/api/auth/guest');
       dispatch(setCredentials(res.data));
       navigate('/');
     } catch (err: any) {

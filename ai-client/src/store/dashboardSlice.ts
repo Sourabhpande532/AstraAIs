@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import api from '../lib/api';
 import type { RootState } from './store';
 
 interface DashboardState {
@@ -19,7 +19,7 @@ const getAuthHeaders = (state: RootState) => ({
 });
 
 export const fetchDashboardData = createAsyncThunk('dashboard/fetchData', async (_, { getState }) => {
-  const response = await axios.get('/api/hr/dashboard', getAuthHeaders(getState() as RootState));
+  const response = await api.get('/api/hr/dashboard', getAuthHeaders(getState() as RootState));
   return response.data;
 });
 

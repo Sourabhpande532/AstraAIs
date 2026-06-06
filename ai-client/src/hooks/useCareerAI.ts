@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../lib/api';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../store/store';
 
@@ -21,7 +21,7 @@ export const useCareerAI = () => {
     e.preventDefault();
     setLoading(true); setResult(null);
     try {
-      const res = await axios.post('/api/career/roadmap', roadmapForm, getHeaders());
+      const res = await api.post('/api/career/roadmap', roadmapForm, getHeaders());
       setResult({ type: 'roadmap', data: res.data });
     } catch (err: any) {
       alert(err.response?.data?.error || err.message);
@@ -34,7 +34,7 @@ export const useCareerAI = () => {
     e.preventDefault();
     setLoading(true); setResult(null);
     try {
-      const res = await axios.post('/api/career/interview', interviewForm, getHeaders());
+      const res = await api.post('/api/career/interview', interviewForm, getHeaders());
       setResult({ type: 'interview', data: res.data });
     } catch (err: any) {
       alert(err.response?.data?.error || err.message);
@@ -47,7 +47,7 @@ export const useCareerAI = () => {
     e.preventDefault();
     setLoading(true); setResult(null);
     try {
-      const res = await axios.post('/api/career/knowledge', knowledgeForm, getHeaders());
+      const res = await api.post('/api/career/knowledge', knowledgeForm, getHeaders());
       setResult({ type: 'knowledge', data: res.data });
     } catch (err: any) {
       alert(err.response?.data?.error || err.message);
@@ -60,7 +60,7 @@ export const useCareerAI = () => {
     e.preventDefault();
     setLoading(true); setResult(null);
     try {
-      const res = await axios.post('/api/career/planner', plannerForm, getHeaders());
+      const res = await api.post('/api/career/planner', plannerForm, getHeaders());
       setResult({ type: 'planner', data: res.data });
     } catch (err: any) {
       alert(err.response?.data?.error || err.message);
