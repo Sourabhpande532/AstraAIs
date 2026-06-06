@@ -78,12 +78,6 @@ npm run dev  # or `npm start` / `yarn dev`
 
 ---
 
-## Reference
-
-![](./assets/agents.png)
-
----
-
 ## API Reference
 
 ### GET /api/dashboard
