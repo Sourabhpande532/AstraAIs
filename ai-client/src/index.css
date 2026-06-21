@@ -522,3 +522,29 @@ select.astra-form-input option {
     border-bottom: 1px solid var(--border);
   }
 }
+
+/* ─── AI Terminal – Mobile Fix ───────────────────────────────── */
+@media (max-width: 600px) {
+  /* Override JS-driven position: snap terminal to full bottom of screen */
+  .astra-terminal-container {
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    top: auto !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 70vh !important;
+    border-radius: 12px 12px 0 0 !important;
+  }
+
+  /* Minimized state: just show the slim header bar */
+  .astra-terminal-container.astra-terminal-minimized {
+    height: 50px !important;
+  }
+
+  /* Stop drag cursor on mobile – no dragging */
+  .astra-terminal-container [style*="cursor: grab"] {
+    cursor: default !important;
+  }
+}
+

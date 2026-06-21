@@ -22,7 +22,7 @@ const CareerAI = () => {
       <p className="astra-page-subtitle">Level up your career with AI Prompt Engineering, RAG, and Agentic Tool Calling.</p>
 
       {/* Tabs */}
-      <div className="d-flex gap-2 mb-4 overflow-auto pb-2">
+      <div className="d-flex gap-2 mb-4 overflow-auto pb-2 custom-scrollbar" style={{ WebkitOverflowScrolling: 'touch' }}>
         <button 
           className={`btn ${activeTab === 'roadmap' ? 'btn-info text-dark fw-bold' : 'btn-outline-secondary text-light'}`}
           onClick={() => { setActiveTab('roadmap'); setResult(null); }}

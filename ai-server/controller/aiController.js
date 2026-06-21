@@ -13,7 +13,7 @@ const hrKnowledgeBase = [
   {
     policy: "Employees are entitled to 12 days of casual leave, 10 days of sick leave, and 15 days of earned leave per year.",
     source: "Astra HR Handbook, Section 4.1",
-    tags: ["leave policy", "casual leave", "sick leave", "earned leave", "allowance", "leave balance", "how many leaves"]
+    tags: ["leave policy", "leave allowance", "how many leaves", "leave entitlement", "check leave", "leave balance", "how much leave"]
   },
   {
     policy: "Remote work is allowed up to 2 days a week with prior manager approval.",
@@ -23,12 +23,12 @@ const hrKnowledgeBase = [
   {
     policy: "Maternity leave is granted for 26 weeks, and paternity leave for 2 weeks.",
     source: "Astra HR Handbook, Section 4.3",
-    tags: ["maternity", "paternity", "parental leave"]
+    tags: ["maternity", "paternity", "parental leave", "maternity leave", "paternity leave"]
   },
   {
     policy: "All employees must complete 8 hours of work per day. Flexi-hours are available between 8 AM to 8 PM.",
     source: "Astra HR Handbook, Section 2.1",
-    tags: ["work hours", "flexi", "timing", "office hours"]
+    tags: ["work hours", "flexi", "timing", "office hours", "working hours"]
   }
 ];
 
@@ -55,6 +55,7 @@ const tools = {
     };
   },
   applyForLeave: async ({ userId, type, days, reason }) => {
+    const safeReason = reason && reason.trim() ? reason.trim() : 'Not specified';
     const user = await User.findById(userId);
     if (!user || user.leaveBalance[type] === undefined) return { status: "Failed", message: "Invalid leave type or user" };
     if (user.leaveBalance[type] < days) {
@@ -62,8 +63,8 @@ const tools = {
     }
     user.leaveBalance[type] -= days;
     await user.save();
-    const leave = await LeaveRequest.create({ user: userId, type, days, reason });
-    return { status: "Success", leaveId: leave._id, type, days, reason, remainingBalance: user.leaveBalance[type] };
+    const leave = await LeaveRequest.create({ user: userId, type, days, reason: safeReason });
+    return { status: "Success", leaveId: leave._id, type, days, reason: safeReason, remainingBalance: user.leaveBalance[type] };
   },
   scheduleMeeting: async ({ userId, title, date }) => {
     const meetingDate = new Date(date);

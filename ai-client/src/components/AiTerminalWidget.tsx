@@ -16,7 +16,7 @@ const INITIAL_LINES: TerminalLine[] = [
 function reducer(state: TerminalState, action: Action): TerminalState {
   switch (action.type) {
     case 'OPEN':             return { ...state, isOpen: true, isMinimized: false };
-    case 'CLOSE':            return { ...state, isOpen: false, isMinimized: false };
+    case 'CLOSE':            return { ...state, isOpen: false, isMinimized: false, lines: [...INITIAL_LINES], isLoading: false };
     case 'TOGGLE_MINIMIZE':  return { ...state, isMinimized: !state.isMinimized };
     case 'ADD_LINE':         return { ...state, lines: [...state.lines, action.payload] };
     case 'SET_LOADING':      return { ...state, isLoading: action.payload };
@@ -72,7 +72,7 @@ const AiTerminalWidget = () => {
   const bottomRef = useRef<HTMLDivElement>(null);
 
   const { user } = useSelector((s: RootState) => s.auth);
-  const { streamChat } = useTerminalStream();
+  const { streamChat, abortStream } = useTerminalStream();
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -156,7 +156,7 @@ const AiTerminalWidget = () => {
   return (
     <div
       ref={containerRef}
-      className="shadow-lg rounded overflow-hidden"
+      className={`shadow-lg rounded overflow-hidden astra-terminal-container${state.isMinimized ? ' astra-terminal-minimized' : ''}`}
       style={{
         position: 'fixed', left: pos.x, top: pos.y, zIndex: 9999,
         width: 440, height: state.isMinimized ? 50 : 540,
@@ -178,7 +178,7 @@ const AiTerminalWidget = () => {
         </div>
         <div className="d-flex gap-2">
           <button onClick={() => dispatch({ type: 'TOGGLE_MINIMIZE' })} className="btn btn-sm p-0 d-flex align-items-center justify-content-center" style={{ width: 16, height: 16, borderRadius: '50%', background: '#f0c040', border: 'none' }} title="Minimize" />
-          <button onClick={() => dispatch({ type: 'CLOSE' })} className="btn btn-sm p-0 d-flex align-items-center justify-content-center" style={{ width: 16, height: 16, borderRadius: '50%', background: '#ff4444', border: 'none' }} title="Close" />
+          <button onClick={() => { abortStream(); dispatch({ type: 'CLOSE' }); }} className="btn btn-sm p-0 d-flex align-items-center justify-content-center" style={{ width: 16, height: 16, borderRadius: '50%', background: '#ff4444', border: 'none' }} title="Close" />
         </div>
       </div>
 

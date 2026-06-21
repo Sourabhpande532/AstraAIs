@@ -79,5 +79,7 @@ export const useTerminalStream = () => {
     }
   };
 
-  return { streamChat };
+  const abortStream = () => abortRef.current?.abort();
+
+  return { streamChat, abortStream };
 };
