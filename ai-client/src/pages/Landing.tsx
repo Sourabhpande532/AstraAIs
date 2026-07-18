@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../store/store';
-import { FaUserShield, FaGraduationCap, FaUserTie, FaQuestionCircle, FaArrowRight, FaMagic } from 'react-icons/fa';
+import {FaGraduationCap, FaUserTie, FaQuestionCircle, FaArrowRight, FaMagic } from 'react-icons/fa';
 import './Landing.css';
 
 const Landing = () => {

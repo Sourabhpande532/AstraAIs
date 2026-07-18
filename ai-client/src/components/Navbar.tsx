@@ -22,7 +22,6 @@ const Navbar = () => {
     <nav className="astra-navbar navbar navbar-expand-lg">
       <div className="container">
         <Link className="navbar-brand text-decoration-none" to="/">
-          <FaUserShield className="brand-icon me-2" />
           <span className="brand-text">ASTRA_HR</span>
         </Link>
         

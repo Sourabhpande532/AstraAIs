@@ -41,6 +41,12 @@ npm run dev  # or `npm start` / `yarn dev`
 
 ---
 
+## Reference 
+
+![](/assets/dashboard.png)
+
+---
+
 ## Features
 
 **Employee Dashboard**
