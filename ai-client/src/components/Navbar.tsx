@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../store/authSlice';
 import type { RootState } from '../store/store';
-import { FaUserShield, FaBars } from 'react-icons/fa';
+import { FaBars } from 'react-icons/fa';
 import { useState } from 'react';
 
 const Navbar = () => {
