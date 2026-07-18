@@ -15,7 +15,7 @@
   --accent-pink: #f687b3;
   --text-primary: #f0f4f8;
   --text-secondary: #a0aec0;
-  --text-muted: #4a5568;
+  --text-muted: #9ca3af;
   --glow-blue: 0 0 20px rgba(99, 179, 237, 0.2);
   --glow-green: 0 0 20px rgba(72, 187, 120, 0.2);
   --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
@@ -35,6 +35,14 @@ body {
   min-height: 100vh;
   color: var(--text-primary);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+.text-secondary {
+  color: var(--text-secondary) !important;
 }
 
 /* ─── Navbar ─────────────────────────────────────────────────── */

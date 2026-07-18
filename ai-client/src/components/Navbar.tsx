@@ -41,6 +41,13 @@ const Navbar = () => {
             <div className="d-flex flex-column flex-lg-row align-items-lg-center gap-3 mt-3 mt-lg-0 pb-2 pb-lg-0">
               <Link 
                 className="text-light text-decoration-none fw-bold nav-link-custom" 
+                to="/dashboard"
+                onClick={() => setIsNavCollapsed(true)}
+              >
+                Dashboard
+              </Link>
+              <Link 
+                className="text-light text-decoration-none fw-bold nav-link-custom" 
                 to="/career"
                 onClick={() => setIsNavCollapsed(true)}
               >
