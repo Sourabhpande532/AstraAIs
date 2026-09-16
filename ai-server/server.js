@@ -14,12 +14,26 @@ const careerRoutes = require("./routes/careerRoutes");
 
 const app = express();
 
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "http://127.0.0.1:5173",
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(null, origin);
+      }
+    },
     credentials: true,
   }),
 );
+
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());

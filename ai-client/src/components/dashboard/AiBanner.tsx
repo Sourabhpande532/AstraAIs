@@ -5,12 +5,12 @@ const AiBanner: React.FC = () => {
   return (
     <div className="astra-ai-banner">
       <div className="astra-ai-banner-icon">
-        <FaRobot style={{ color: '#63b3ed' }} />
+        <FaRobot />
       </div>
       <div>
-        <div className="astra-ai-banner-title">AI HR Assistant is Active</div>
+        <div className="astra-ai-banner-title">AI HR Assistant Ready</div>
         <p className="astra-ai-banner-text">
-          Use the terminal widget on the bottom right to schedule meetings, apply for leave, or ask about company policies.
+          Use the terminal widget in the bottom-right to check balances, apply for leave, schedule meetings, or query HR policies.
         </p>
       </div>
       <div className="astra-ai-badge">ASTRA READY</div>
@@ -18,4 +18,4 @@ const AiBanner: React.FC = () => {
   );
 };
 
-export default AiBanner;
+export default React.memo(AiBanner);

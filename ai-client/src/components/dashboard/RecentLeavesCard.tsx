@@ -1,7 +1,7 @@
 import React from 'react';
 import AstraCard from '../ui/AstraCard';
 import EmptyState from '../ui/EmptyState';
-import { FaUmbrellaBeach } from 'react-icons/fa';
+import { FaHistory } from 'react-icons/fa';
 
 interface RecentLeavesProps {
   leaves: any[];
@@ -11,15 +11,15 @@ const RecentLeavesCard: React.FC<RecentLeavesProps> = ({ leaves }) => {
   return (
     <AstraCard 
       title="Recent Leaves" 
-      icon={<FaUmbrellaBeach />} 
-      headerIconStyle={{ color: '#48bb78' }} 
+      icon={<FaHistory />} 
+      headerIconStyle={{ color: '#06b6d4' }} 
       bodyClass="p-0"
     >
       {leaves.length === 0 ? (
         <EmptyState message="No recent leave requests." />
       ) : (
         leaves.slice(0, 4).map((leave) => (
-          <div key={leave._id} className="astra-list-item px-4">
+          <div key={leave._id} className="astra-list-item">
             <div>
               <div className="leave-type-name d-flex align-items-center">
                 <span className={`leave-type-dot dot-${leave.type}`}></span>
@@ -35,4 +35,4 @@ const RecentLeavesCard: React.FC<RecentLeavesProps> = ({ leaves }) => {
   );
 };
 
-export default RecentLeavesCard;
+export default React.memo(RecentLeavesCard);

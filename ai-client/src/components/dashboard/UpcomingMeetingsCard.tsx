@@ -8,23 +8,33 @@ interface UpcomingMeetingsProps {
 }
 
 const UpcomingMeetingsCard: React.FC<UpcomingMeetingsProps> = ({ meetings }) => {
+  const formatDate = (dateStr: string) => {
+    try {
+      const d = new Date(dateStr);
+      if (isNaN(d.getTime())) return dateStr;
+      return d.toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' });
+    } catch {
+      return dateStr;
+    }
+  };
+
   return (
     <AstraCard 
       title="Upcoming Meetings" 
       icon={<FaCalendarAlt />} 
-      headerIconStyle={{ color: '#ed8936' }} 
+      headerIconStyle={{ color: '#f59e0b' }} 
       bodyClass="p-0"
     >
       {meetings.length === 0 ? (
         <EmptyState message="No upcoming meetings." />
       ) : (
         meetings.map((meeting) => (
-          <div key={meeting._id} className="astra-list-item px-4">
+          <div key={meeting._id} className="astra-list-item">
             <div>
               <div className="meeting-title">{meeting.title}</div>
               <div className="meeting-date">
                 <FaCalendarAlt size={10} className="me-1" />
-                {new Date(meeting.date).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}
+                {formatDate(meeting.date)}
               </div>
             </div>
           </div>
@@ -34,4 +44,4 @@ const UpcomingMeetingsCard: React.FC<UpcomingMeetingsProps> = ({ meetings }) => 
   );
 };
 
-export default UpcomingMeetingsCard;
+export default React.memo(UpcomingMeetingsCard);

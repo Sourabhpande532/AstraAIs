@@ -1,0 +1,18 @@
+{
+  "short_name": "Astra HR",
+  "name": "Astra HR: AI-Powered HR & Career Assistant",
+  "description": "Manage employee leaves, schedule meetings, and interact with your AI Career & HR Assistant.",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "48x48 192x192 512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0B0F19",
+  "theme_color": "#0B0F19",
+  "display": "standalone",
+  "orientation": "portrait"
+}

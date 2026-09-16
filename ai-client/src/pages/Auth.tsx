@@ -35,7 +35,7 @@ const Auth = () => {
       dispatch(setCredentials(res.data));
       navigate('/');
     } catch (err: any) {
-      setError('Guest login failed');
+      setError(err.response?.data?.message || 'Guest login failed');
     }
   };
 
@@ -44,7 +44,7 @@ const Auth = () => {
       <div className="astra-auth-card">
         <div className="astra-auth-logo">
           <div className="astra-auth-logo-icon">
-            <FaUserShield style={{ color: '#fff' }} />
+            <FaUserShield />
           </div>
           <h2 className="astra-auth-title">{isLogin ? 'Welcome Back' : 'Create Account'}</h2>
           <p className="astra-auth-subtitle">
@@ -80,7 +80,7 @@ const Auth = () => {
         </button>
         
         <div className="astra-auth-switch">
-          {isLogin ? "Don't have an account? " : "Already have an account? "}
+          {isLogin ? "Don't have an account?" : "Already have an account?"}
           <button onClick={() => setIsLogin(!isLogin)}>
             {isLogin ? 'Sign Up' : 'Sign In'}
           </button>
