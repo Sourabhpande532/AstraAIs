@@ -68,16 +68,6 @@ const Landing = () => {
             Just state your career goal. Our agentic planner breaks it down into learning plans, project recommendations, and interview prep.
           </p>
         </div>
-        
-        <div className="landing-feature-card">
-          <div className="feature-icon-wrapper">
-            <FaQuestionCircle />
-          </div>
-          <h3 className="feature-title">HR Knowledge Base</h3>
-          <p className="feature-desc">
-            Ask any HR or career-related question and get instant RAG-powered answers drawn from our extensive knowledge base.
-          </p>
-        </div>
       </div>
     </div>
   );
