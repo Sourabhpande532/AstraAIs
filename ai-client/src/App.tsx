@@ -1,15 +1,38 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, type ComponentType } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import type { RootState } from './store/store'
 import Navbar from './components/Navbar'
 import LoadingSpinner from './components/ui/LoadingSpinner'
 
-const Landing = lazy(() => import('./pages/Landing'))
-const Dashboard = lazy(() => import('./pages/Dashboard'))
-const CareerAI = lazy(() => import('./pages/CareerAI'))
-const Auth = lazy(() => import('./pages/Auth'))
-const AiTerminalWidget = lazy(() => import('./components/AiTerminalWidget'))
+// Auto-recovery for lazy loaded chunks after new deployments / cache updates
+function lazyWithRetry<T extends ComponentType<any>>(
+  factory: () => Promise<{ default: T }>
+) {
+  return lazy(async () => {
+    const pageHasAlreadyBeenForceRefreshed = JSON.parse(
+      window.sessionStorage.getItem('retry-lazy-refreshed') || 'false'
+    )
+    try {
+      const component = await factory()
+      window.sessionStorage.setItem('retry-lazy-refreshed', 'false')
+      return component
+    } catch (error) {
+      if (!pageHasAlreadyBeenForceRefreshed) {
+        window.sessionStorage.setItem('retry-lazy-refreshed', 'true')
+        window.location.reload()
+        return new Promise<{ default: T }>(() => {})
+      }
+      throw error
+    }
+  })
+}
+
+const Landing = lazyWithRetry(() => import('./pages/Landing'))
+const Dashboard = lazyWithRetry(() => import('./pages/Dashboard'))
+const CareerAI = lazyWithRetry(() => import('./pages/CareerAI'))
+const Auth = lazyWithRetry(() => import('./pages/Auth'))
+const AiTerminalWidget = lazyWithRetry(() => import('./components/AiTerminalWidget'))
 
 function App() {
   const user = useSelector((state: RootState) => state.auth.user)

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'astra-hr-v1';
+const CACHE_NAME = 'astra-hr-v2';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -31,23 +31,24 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   
-  // Exclude API SSE and API requests from offline fallback
+  // Exclude API requests
   if (event.request.url.includes('/api/')) return;
 
+  // Never intercept or cache module scripts through HTML fallback
+  const isScriptOrStyle = event.request.url.includes('/assets/') || event.request.url.endsWith('.js') || event.request.url.endsWith('.css');
+  if (isScriptOrStyle) {
+    return; // Let browser handle Vite module scripts directly from network
+  }
+
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        // Fetch background update for cache
-        fetch(event.request)
-          .then((networkResponse) => {
-            if (networkResponse && networkResponse.status === 200) {
-              caches.open(CACHE_NAME).then((cache) => cache.put(event.request, networkResponse));
-            }
-          })
-          .catch(() => {/* ignore offline error for background revalidation */});
-        return cachedResponse;
-      }
-      return fetch(event.request);
-    })
+    fetch(event.request)
+      .then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200) {
+          const responseClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone));
+        }
+        return networkResponse;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
