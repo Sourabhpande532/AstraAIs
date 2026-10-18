@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../store/store';
-import {FaGraduationCap, FaUserTie,FaArrowRight, FaMagic } from 'react-icons/fa';
+import { FaGraduationCap, FaUserTie, FaArrowRight, FaMagic } from 'react-icons/fa';
 import './Landing.css';
 
 const Landing = () => {
@@ -21,7 +21,7 @@ const Landing = () => {
         <p className="landing-subtitle">
           Supercharge your career with Astra HR. From intelligent roadmap generation and AI interview simulations to agentic planning and an advanced knowledge base.
         </p>
-        
+
         <div className="landing-cta-group">
           {user ? (
             <Link to="/dashboard" className="btn-landing-primary">

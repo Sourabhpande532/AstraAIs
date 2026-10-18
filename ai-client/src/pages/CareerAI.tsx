@@ -5,7 +5,7 @@ import AstraCard from '../components/ui/AstraCard';
 
 const CareerAI = () => {
   const [activeTab, setActiveTab] = useState('roadmap');
-  
+
   const {
     loading, result, setResult,
     roadmapForm, setRoadmapForm,
@@ -23,25 +23,25 @@ const CareerAI = () => {
 
       {/* Tabs */}
       <div className="d-flex gap-2 mb-4 overflow-auto pb-2 custom-scrollbar" style={{ WebkitOverflowScrolling: 'touch' }}>
-        <button 
+        <button
           className={`btn btn-sm px-3 py-2 fw-semibold rounded-pill ${activeTab === 'roadmap' ? 'btn-emerald' : 'btn-dark-subtle'}`}
           onClick={() => { setActiveTab('roadmap'); setResult(null); }}
         >
           <FaGraduationCap className="me-2" /> Roadmap Gen
         </button>
-        <button 
+        <button
           className={`btn btn-sm px-3 py-2 fw-semibold rounded-pill ${activeTab === 'interview' ? 'btn-emerald' : 'btn-dark-subtle'}`}
           onClick={() => { setActiveTab('interview'); setResult(null); }}
         >
           <FaUserTie className="me-2" /> Interview Sim
         </button>
-        <button 
+        <button
           className={`btn btn-sm px-3 py-2 fw-semibold rounded-pill ${activeTab === 'knowledge' ? 'btn-emerald' : 'btn-dark-subtle'}`}
           onClick={() => { setActiveTab('knowledge'); setResult(null); }}
         >
           <FaQuestionCircle className="me-2" /> Knowledge Base
         </button>
-        <button 
+        <button
           className={`btn btn-sm px-3 py-2 fw-semibold rounded-pill ${activeTab === 'planner' ? 'btn-emerald' : 'btn-dark-subtle'}`}
           onClick={() => { setActiveTab('planner'); setResult(null); }}
         >
@@ -57,12 +57,12 @@ const CareerAI = () => {
               <form onSubmit={handleGenerateRoadmap}>
                 <div className="mb-3">
                   <label className="astra-form-label">Target Role</label>
-                  <input type="text" className="astra-form-input" placeholder="e.g. Full Stack MERN Developer" 
-                    value={roadmapForm.role} onChange={e => setRoadmapForm({...roadmapForm, role: e.target.value})} required />
+                  <input type="text" className="astra-form-input" placeholder="e.g. Full Stack MERN Developer"
+                    value={roadmapForm.role} onChange={e => setRoadmapForm({ ...roadmapForm, role: e.target.value })} required />
                 </div>
                 <div className="mb-3">
                   <label className="astra-form-label">Current Skill Level</label>
-                  <select className="astra-form-input" value={roadmapForm.skillLevel} onChange={e => setRoadmapForm({...roadmapForm, skillLevel: e.target.value})}>
+                  <select className="astra-form-input" value={roadmapForm.skillLevel} onChange={e => setRoadmapForm({ ...roadmapForm, skillLevel: e.target.value })}>
                     <option>Beginner</option>
                     <option>Intermediate</option>
                     <option>Advanced</option>
@@ -71,7 +71,7 @@ const CareerAI = () => {
                 <div className="mb-4">
                   <label className="astra-form-label">Timeline (Months)</label>
                   <input type="number" className="astra-form-input" min="1" max="24"
-                    value={roadmapForm.timeline} onChange={e => setRoadmapForm({...roadmapForm, timeline: e.target.value})} required />
+                    value={roadmapForm.timeline} onChange={e => setRoadmapForm({ ...roadmapForm, timeline: e.target.value })} required />
                 </div>
                 <button type="submit" className="astra-btn-primary" disabled={loading}>
                   {loading ? <FaSpinner className="spin me-2" /> : 'Generate JSON Roadmap'}
@@ -83,18 +83,18 @@ const CareerAI = () => {
               <form onSubmit={handleSimulateInterview}>
                 <div className="mb-3">
                   <label className="astra-form-label">Job Role</label>
-                  <input type="text" className="astra-form-input" placeholder="e.g. Backend Engineer" 
-                    value={interviewForm.role} onChange={e => setInterviewForm({...interviewForm, role: e.target.value})} required />
+                  <input type="text" className="astra-form-input" placeholder="e.g. Backend Engineer"
+                    value={interviewForm.role} onChange={e => setInterviewForm({ ...interviewForm, role: e.target.value })} required />
                 </div>
                 <div className="mb-3">
                   <label className="astra-form-label">Years of Experience</label>
                   <input type="number" className="astra-form-input" min="0" max="20"
-                    value={interviewForm.experience} onChange={e => setInterviewForm({...interviewForm, experience: e.target.value})} required />
+                    value={interviewForm.experience} onChange={e => setInterviewForm({ ...interviewForm, experience: e.target.value })} required />
                 </div>
                 <div className="mb-4">
                   <label className="astra-form-label">Key Skills</label>
                   <input type="text" className="astra-form-input" placeholder="e.g. Node.js, MongoDB, Docker"
-                    value={interviewForm.skills} onChange={e => setInterviewForm({...interviewForm, skills: e.target.value})} required />
+                    value={interviewForm.skills} onChange={e => setInterviewForm({ ...interviewForm, skills: e.target.value })} required />
                 </div>
                 <button type="submit" className="astra-btn-primary" disabled={loading}>
                   {loading ? <FaSpinner className="spin me-2" /> : 'Generate Structured JSON'}
@@ -106,8 +106,8 @@ const CareerAI = () => {
               <form onSubmit={handleAskKnowledge}>
                 <div className="mb-4">
                   <label className="astra-form-label">Ask a Question (RAG)</label>
-                  <input type="text" className="astra-form-input" placeholder="e.g. How to crack DSA interviews?" 
-                    value={knowledgeForm.question} onChange={e => setKnowledgeForm({...knowledgeForm, question: e.target.value})} required />
+                  <input type="text" className="astra-form-input" placeholder="e.g. How to crack DSA interviews?"
+                    value={knowledgeForm.question} onChange={e => setKnowledgeForm({ ...knowledgeForm, question: e.target.value })} required />
                 </div>
                 <button type="submit" className="astra-btn-primary" disabled={loading}>
                   {loading ? <FaSpinner className="spin me-2" /> : 'Ask Knowledge Base'}
@@ -119,8 +119,8 @@ const CareerAI = () => {
               <form onSubmit={handleAgenticPlanner}>
                 <div className="mb-4">
                   <label className="astra-form-label">What is your career goal?</label>
-                  <textarea className="astra-form-input" rows={4} placeholder="e.g. I want to become a MERN Developer in 6 months." 
-                    value={plannerForm.prompt} onChange={e => setPlannerForm({...plannerForm, prompt: e.target.value})} required />
+                  <textarea className="astra-form-input" rows={4} placeholder="e.g. I want to become a MERN Developer in 6 months."
+                    value={plannerForm.prompt} onChange={e => setPlannerForm({ ...plannerForm, prompt: e.target.value })} required />
                 </div>
                 <button type="submit" className="astra-btn-primary" disabled={loading}>
                   {loading ? <FaSpinner className="spin me-2" /> : 'Execute Agentic Plan'}
@@ -135,7 +135,7 @@ const CareerAI = () => {
           <AstraCard title="Output" bodyClass="d-flex flex-column">
             {!result && !loading && <div className="text-muted text-center py-5">Submit the form to generate AI recommendations here.</div>}
             {loading && <div className="text-center py-5"><FaSpinner className="spin fs-2" style={{ color: '#10b981' }} /></div>}
-            
+
             {result?.type === 'roadmap' && (
               <div className="fade-up">
                 <h5 className="mb-4" style={{ color: '#34d399' }}>{result.data.role} ({result.data.timeline} months)</h5>
@@ -183,7 +183,7 @@ const CareerAI = () => {
             {result?.type === 'planner' && (
               <div className="fade-up">
                 <h5 className="mb-4" style={{ color: '#34d399' }}>Goal: {result.data.goal}</h5>
-                
+
                 <div className="mb-3 p-3 rounded-3" style={{ background: 'rgba(11, 15, 25, 0.6)', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
                   <h6 style={{ color: '#f59e0b', fontWeight: 700 }}>Learning Plan</h6>
                   <ul className="text-secondary small mb-0 ps-3">

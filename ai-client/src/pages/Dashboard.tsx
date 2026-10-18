@@ -23,7 +23,7 @@ const Dashboard = () => {
     <div className="astra-page fade-up">
       <h1 className="astra-page-title">My Dashboard</h1>
       <p className="astra-page-subtitle">Overview of your leaves, meetings, and activities.</p>
-      
+
       <div className="row g-4">
         <div className="col-lg-4">
           <LeaveBalanceCard balances={user?.leaveBalance} />
@@ -35,7 +35,7 @@ const Dashboard = () => {
           <UpcomingMeetingsCard meetings={meetings} />
         </div>
       </div>
-      
+
       <AiBanner />
     </div>
   );

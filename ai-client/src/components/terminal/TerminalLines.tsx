@@ -3,8 +3,8 @@ import { FaSpinner, FaBook, FaCog, FaCheckCircle, FaExclamationCircle, FaRobot }
 export const StatusLine = ({ text, type }: { text: string; type: string }) => {
   const icon =
     type === 'thinking' ? <FaSpinner className="spin me-2" style={{ color: '#a0a0ff' }} /> :
-    type === 'rag'      ? <FaBook className="me-2" style={{ color: '#f0c040' }} /> :
-                          <FaCog className="me-2" style={{ color: '#80ffb0' }} />;
+      type === 'rag' ? <FaBook className="me-2" style={{ color: '#f0c040' }} /> :
+        <FaCog className="me-2" style={{ color: '#80ffb0' }} />;
   return (
     <div className="d-flex align-items-center py-1" style={{ color: '#c0c0e0', fontSize: '0.78rem' }}>
       {icon}<span>{text}</span>

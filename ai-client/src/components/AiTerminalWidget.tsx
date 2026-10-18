@@ -15,13 +15,13 @@ const INITIAL_LINES: TerminalLine[] = [
 
 function reducer(state: TerminalState, action: Action): TerminalState {
   switch (action.type) {
-    case 'OPEN':             return { ...state, isOpen: true, isMinimized: false };
-    case 'CLOSE':            return { ...state, isOpen: false, isMinimized: false, lines: [...INITIAL_LINES], isLoading: false };
-    case 'TOGGLE_MINIMIZE':  return { ...state, isMinimized: !state.isMinimized };
-    case 'ADD_LINE':         return { ...state, lines: [...state.lines, action.payload] };
-    case 'SET_LOADING':      return { ...state, isLoading: action.payload };
-    case 'CLEAR':            return { ...state, lines: [...INITIAL_LINES] };
-    default:                 return state;
+    case 'OPEN': return { ...state, isOpen: true, isMinimized: false };
+    case 'CLOSE': return { ...state, isOpen: false, isMinimized: false, lines: [...INITIAL_LINES], isLoading: false };
+    case 'TOGGLE_MINIMIZE': return { ...state, isMinimized: !state.isMinimized };
+    case 'ADD_LINE': return { ...state, lines: [...state.lines, action.payload] };
+    case 'SET_LOADING': return { ...state, isLoading: action.payload };
+    case 'CLEAR': return { ...state, lines: [...INITIAL_LINES] };
+    default: return state;
   }
 }
 
@@ -124,14 +124,14 @@ const AiTerminalWidget = () => {
 
   const renderLine = (line: TerminalLine) => {
     switch (line.type) {
-      case 'user':        return <div key={line.id} className="py-1" style={{ color: '#f8fafc', fontWeight: 600, fontSize: '0.83rem', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{line.text}</div>;
-      case 'status':      return <StatusLine key={line.id} text={line.text!} type={line.data?.type || 'info'} />;
+      case 'user': return <div key={line.id} className="py-1" style={{ color: '#f8fafc', fontWeight: 600, fontSize: '0.83rem', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{line.text}</div>;
+      case 'status': return <StatusLine key={line.id} text={line.text!} type={line.data?.type || 'info'} />;
       case 'plan_header': return <PlanHeader key={line.id} data={line.data} />;
-      case 'step_start':  return <StepStart key={line.id} data={line.data} />;
+      case 'step_start': return <StepStart key={line.id} data={line.data} />;
       case 'step_result': return <ResultBlock key={line.id} data={line.data} />;
-      case 'final':       return <FinalMessage key={line.id} text={line.text!} source={line.data?.source} />;
-      case 'error':       return <div key={line.id} className="py-1" style={{ color: '#f43f5e', fontSize: '0.78rem', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{line.text}</div>;
-      default:            return null;
+      case 'final': return <FinalMessage key={line.id} text={line.text!} source={line.data?.source} />;
+      case 'error': return <div key={line.id} className="py-1" style={{ color: '#f43f5e', fontSize: '0.78rem', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{line.text}</div>;
+      default: return null;
     }
   };
 
@@ -171,7 +171,7 @@ const AiTerminalWidget = () => {
         transition: isDragging ? 'none' : 'height 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
       }}
     >
-      <div 
+      <div
         onMouseDown={onMouseDown}
         className="d-flex justify-content-between align-items-center px-3 py-2"
         style={{ background: '#111827', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', cursor: 'grab', userSelect: 'none' }}
@@ -225,8 +225,8 @@ const AiTerminalWidget = () => {
                 }}
                 disabled={state.isLoading}
               />
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={() => dispatch({ type: 'CLEAR' })}
                 className="btn btn-sm"
                 style={{ color: '#64748b', fontSize: '0.7rem' }}

@@ -60,14 +60,14 @@ export const useTerminalStream = () => {
           try { payload = JSON.parse(dataStr); } catch { continue; }
 
           switch (event) {
-            case 'status':      addLine('status', payload.text, { type: payload.type }); break;
-            case 'plan':        addLine('plan_header', undefined, payload); break;
-            case 'step_start':  addLine('step_start', payload.text, payload); break;
+            case 'status': addLine('status', payload.text, { type: payload.type }); break;
+            case 'plan': addLine('plan_header', undefined, payload); break;
+            case 'step_start': addLine('step_start', payload.text, payload); break;
             case 'step_result':
               addLine('step_result', undefined, payload);
               if (payload.success) reduxDispatch(fetchDashboardData());
               break;
-            case 'done':  addLine('final', payload.reply, { source: payload.source }); break;
+            case 'done': addLine('final', payload.reply, { source: payload.source }); break;
             case 'error': addLine('error', payload.text); break;
           }
         }

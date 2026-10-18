@@ -26,11 +26,11 @@ const Navbar = () => {
           <div className="astra-brand-emblem">A</div>
           <span>ASTRA HR</span>
         </Link>
-        
+
         {user && (
-          <button 
-            className="navbar-toggler custom-toggler border-0" 
-            type="button" 
+          <button
+            className="navbar-toggler custom-toggler border-0"
+            type="button"
             onClick={handleNavCollapse}
             aria-label="Toggle navigation"
           >
@@ -41,14 +41,14 @@ const Navbar = () => {
         <div className={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse justify-content-end`} id="navbarNav">
           {user && (
             <div className="d-flex flex-column flex-lg-row align-items-lg-center gap-3 mt-3 mt-lg-0 pb-2 pb-lg-0">
-              <Link 
+              <Link
                 className={`text-decoration-none nav-link-custom ${location.pathname === '/dashboard' ? 'active' : ''}`}
                 to="/dashboard"
                 onClick={() => setIsNavCollapsed(true)}
               >
                 Dashboard
               </Link>
-              <Link 
+              <Link
                 className={`text-decoration-none nav-link-custom ${location.pathname === '/career' ? 'active' : ''}`}
                 to="/career"
                 onClick={() => setIsNavCollapsed(true)}

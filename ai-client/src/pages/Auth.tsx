@@ -11,7 +11,7 @@ const Auth = () => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [error, setError] = useState('');
-  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -53,7 +53,7 @@ const Auth = () => {
         </div>
 
         {error && <div className="astra-alert-error">{error}</div>}
-        
+
         <form onSubmit={handleSubmit}>
           {!isLogin && (
             <div className="astra-form-group">
@@ -69,16 +69,16 @@ const Auth = () => {
             <label className="astra-form-label">Password</label>
             <input type="password" className="astra-form-input" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
-          
+
           <button type="submit" className="astra-btn-primary">{isLogin ? 'Sign In' : 'Create Account'}</button>
         </form>
-        
+
         <div className="astra-divider">OR</div>
-        
+
         <button className="astra-btn-ghost" onClick={handleGuestLogin}>
           Continue as Guest
         </button>
-        
+
         <div className="astra-auth-switch">
           {isLogin ? "Don't have an account?" : "Already have an account?"}
           <button onClick={() => setIsLogin(!isLogin)}>
