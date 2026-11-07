@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../store/authSlice';
 import type { RootState } from '../store/store';
-import { FaBars } from 'react-icons/fa';
+import { FaBars, FaTimes } from 'react-icons/fa';
 import { useState } from 'react';
 
 const Navbar = () => {
@@ -13,6 +13,7 @@ const Navbar = () => {
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
 
   const handleLogout = () => {
+    setIsNavCollapsed(true);
     dispatch(logout());
     navigate('/auth');
   };
@@ -20,27 +21,31 @@ const Navbar = () => {
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 
   return (
-    <nav className="astra-navbar navbar navbar-expand-lg">
-      <div className="container">
-        <Link className="navbar-brand text-decoration-none" to="/">
-          <div className="astra-brand-emblem">A</div>
+    <nav className="astra-navbar navbar navbar-expand-lg" aria-label="Main navigation">
+      <div className="container astra-nav-container">
+        <Link
+          className="navbar-brand text-decoration-none"
+          to="/"
+          onClick={() => setIsNavCollapsed(true)}
+        >
+          <div className="astra-brand-emblem" aria-hidden="true">A</div>
           <span>ASTRA HR</span>
         </Link>
 
-        {user && (
-          <button
-            className="navbar-toggler custom-toggler border-0"
-            type="button"
-            onClick={handleNavCollapse}
-            aria-label="Toggle navigation"
-          >
-            <FaBars className="text-light" />
-          </button>
-        )}
+        <button
+          className="navbar-toggler custom-toggler border-0"
+          type="button"
+          onClick={handleNavCollapse}
+          aria-controls="navbarNav"
+          aria-expanded={!isNavCollapsed}
+          aria-label="Toggle navigation"
+        >
+          {isNavCollapsed ? <FaBars className="text-light" /> : <FaTimes className="text-light" />}
+        </button>
 
         <div className={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse justify-content-end`} id="navbarNav">
-          {user && (
-            <div className="d-flex flex-column flex-lg-row align-items-lg-center gap-3 mt-3 mt-lg-0 pb-2 pb-lg-0">
+          {user ? (
+            <div className="astra-nav-menu">
               <Link
                 className={`text-decoration-none nav-link-custom ${location.pathname === '/dashboard' ? 'active' : ''}`}
                 to="/dashboard"
@@ -55,8 +60,30 @@ const Navbar = () => {
               >
                 Career AI
               </Link>
-              <span className="astra-welcome mb-1 mb-lg-0 ms-lg-2">Welcome, {user.name}</span>
-              <button className="astra-logout-btn" onClick={handleLogout}>Logout</button>
+              <span className="astra-nav-divider d-none d-lg-inline-block" aria-hidden="true" />
+              <span className="astra-welcome">Welcome, {user.name}</span>
+              <button type="button" className="astra-logout-btn" onClick={handleLogout}>
+                Logout
+              </button>
+            </div>
+          ) : (
+            <div className="astra-nav-menu">
+              <Link
+                className={`text-decoration-none nav-link-custom ${location.pathname === '/' ? 'active' : ''}`}
+                to="/"
+                onClick={() => setIsNavCollapsed(true)}
+              >
+                Home
+              </Link>
+              {location.pathname !== '/auth' && (
+                <Link
+                  className="astra-nav-cta text-decoration-none"
+                  to="/auth"
+                  onClick={() => setIsNavCollapsed(true)}
+                >
+                  Sign In
+                </Link>
+              )}
             </div>
           )}
         </div>

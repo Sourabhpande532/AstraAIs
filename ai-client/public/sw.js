@@ -1,4 +1,4 @@
-const CACHE_NAME = 'astra-hr-v3';
+const CACHE_NAME = 'astra-hr-v4';
 const OFFLINE_URL = '/index.html';
 
 self.addEventListener('install', (event) => {

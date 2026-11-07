@@ -1,2 +1,5 @@
 /docs
 /my-learning
+.env
+.env.*
+!.env.example

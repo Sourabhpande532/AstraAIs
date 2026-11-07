@@ -5,34 +5,34 @@
   --bg-secondary: #111827;
   --bg-surface: #161f33;
   --bg-surface-hover: #1e293b;
-  --bg-card: rgba(22, 31, 51, 0.75);
-  
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-active: rgba(16, 185, 129, 0.4);
+  --bg-card: rgba(22, 31, 51, 0.82);
+
+  --border-subtle: rgba(255, 255, 255, 0.09);
+  --border-active: rgba(16, 185, 129, 0.42);
   --border-glow: rgba(16, 185, 129, 0.25);
-  
+
   /* Accent Colors */
   --accent-primary: #10b981;    /* Emerald */
   --accent-primary-hover: #059669;
   --accent-primary-light: #34d399;
-  
+
   --accent-amber: #f59e0b;      /* Warm Amber */
   --accent-amber-light: #fbbf24;
-  
+
   --accent-cyan: #06b6d4;       /* Ice Cyan */
   --accent-cyan-light: #38bdf8;
 
   --accent-rose: #f43f5e;       /* Sick / Alert */
 
-  /* Neutral Text Tokens */
+  /* Neutral Text Tokens (WCAG AA compliant contrast on dark slate) */
   --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
 
   /* Shadows & Elevation */
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
   --shadow-card: 0 12px 32px -8px rgba(0, 0, 0, 0.45);
-  --shadow-emerald: 0 4px 20px rgba(16, 185, 129, 0.2);
+  --shadow-emerald: 0 4px 20px rgba(16, 185, 129, 0.22);
 
   /* Border Radii */
   --radius-lg: 16px;
@@ -49,10 +49,11 @@
   box-sizing: border-box;
 }
 
+/* NOTE: Do NOT set overflow-x: hidden on html, as that breaks position: sticky on the navbar */
 body {
   background-color: var(--bg-primary);
   background-image:
-    radial-gradient(ellipse at 15% 10%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 15% 10%, rgba(16, 185, 129, 0.06) 0%, transparent 50%),
     radial-gradient(ellipse at 85% 60%, rgba(6, 182, 212, 0.04) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 90%, rgba(245, 158, 11, 0.03) 0%, transparent 50%);
   background-attachment: fixed;
@@ -61,6 +62,7 @@ body {
   font-family: var(--font-sans);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -78,90 +80,192 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-secondary) !important;
 }
 
-/* ─── Navigation Bar ───────────────────────────────────────────── */
+.text-emerald {
+  color: var(--accent-primary-light) !important;
+}
+
+/* ─── Sticky Navigation Bar ────────────────────────────────────── */
 .astra-navbar {
-  background: rgba(11, 15, 25, 0.9) !important;
+  background: rgba(11, 15, 25, 0.92) !important;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border-subtle);
-  padding: 0.8rem 0;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  padding: 0.75rem 0;
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 0 !important;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1030;
+}
+
+/* Match exact max-width and horizontal padding with .astra-page so Navbar aligns with page content */
+.astra-nav-container {
+  max-width: 1140px !important;
+  margin: 0 auto;
+  padding-left: 1.25rem !important;
+  padding-right: 1.25rem !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .astra-navbar .navbar-brand {
   font-family: var(--font-sans);
   font-weight: 800;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   letter-spacing: -0.03em;
-  color: var(--text-primary);
-  display: flex;
+  color: var(--text-primary) !important;
+  display: inline-flex;
   align-items: center;
   gap: 0.6rem;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
 }
 
 .astra-brand-emblem {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
   background: linear-gradient(135deg, var(--accent-primary), var(--accent-cyan));
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: #0b0f19;
   font-weight: 800;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   box-shadow: var(--shadow-emerald);
+  flex-shrink: 0;
 }
 
-.astra-welcome {
-  color: var(--text-secondary);
-  font-size: 0.85rem;
-  font-weight: 500;
-}
-
-.nav-link-custom {
-  color: var(--text-secondary) !important;
-  font-size: 0.88rem;
-  font-weight: 600;
-  padding: 0.4rem 0.8rem;
-  border-radius: var(--radius-sm);
-  transition: all 0.2s ease;
-}
-
-.nav-link-custom:hover, .nav-link-custom.active {
-  color: var(--text-primary) !important;
+.custom-toggler {
+  height: 38px;
+  width: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 8px;
   background: rgba(255, 255, 255, 0.05);
 }
 
-.astra-logout-btn {
-  background: rgba(244, 63, 94, 0.08);
-  border: 1px solid rgba(244, 63, 94, 0.25);
-  color: #fda4af;
-  font-size: 0.8rem;
+.custom-toggler:focus {
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.4);
+}
+
+.astra-nav-menu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.nav-link-custom {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  color: var(--text-secondary) !important;
+  font-size: 0.88rem;
   font-weight: 600;
-  padding: 0.35rem 1rem;
+  padding: 0 0.9rem;
+  border-radius: var(--radius-sm);
+  line-height: 1;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.nav-link-custom:hover,
+.nav-link-custom.active {
+  color: var(--text-primary) !important;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.astra-nav-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border-subtle);
+  margin: 0 0.25rem;
+}
+
+.astra-welcome {
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  padding: 0 0.35rem;
+}
+
+.astra-nav-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  background: linear-gradient(135deg, var(--accent-primary), #059669);
+  color: #fff !important;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0 1.1rem;
+  border-radius: var(--radius-sm);
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: var(--shadow-emerald);
+  transition: all 0.2s ease;
+}
+
+.astra-nav-cta:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+}
+
+.astra-logout-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  background: rgba(244, 63, 94, 0.1);
+  border: 1px solid rgba(244, 63, 94, 0.28);
+  color: #fda4af;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0 1rem;
   border-radius: 20px;
+  line-height: 1;
+  white-space: nowrap;
   transition: all 0.2s ease;
   cursor: pointer;
 }
 
 .astra-logout-btn:hover {
-  background: rgba(244, 63, 94, 0.18);
-  border-color: rgba(244, 63, 94, 0.4);
+  background: rgba(244, 63, 94, 0.2);
+  border-color: rgba(244, 63, 94, 0.45);
   color: #fff;
 }
 
-/* ─── Page Layouts ─────────────────────────────────────────────── */
+/* ─── Page Layouts & Headers ───────────────────────────────────── */
 .astra-page {
   max-width: 1140px;
   margin: 0 auto;
-  padding: 2.5rem 1.25rem;
+  padding: 2rem 0.5rem;
+}
+
+.astra-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-primary-light);
+  margin-bottom: 0.3rem;
 }
 
 .astra-page-title {
-  font-size: 2rem;
+  font-size: clamp(1.6rem, 3vw, 2rem);
   font-weight: 800;
   letter-spacing: -0.03em;
   color: var(--text-primary);
@@ -170,8 +274,100 @@ h1, h2, h3, h4, h5, h6 {
 
 .astra-page-subtitle {
   color: var(--text-secondary);
-  font-size: 0.95rem;
-  margin-bottom: 2.25rem;
+  font-size: 0.94rem;
+  margin-bottom: 2rem;
+}
+
+.astra-action-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  gap: 0.45rem;
+  background: linear-gradient(135deg, var(--accent-primary), #059669);
+  border: none;
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0 1rem;
+  border-radius: 8px;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: var(--shadow-emerald);
+  transition: all 0.2s ease;
+}
+
+.astra-action-btn-primary:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+}
+
+.astra-action-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  gap: 0.45rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0 0.95rem;
+  border-radius: 8px;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.astra-action-btn-secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.astra-action-btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ─── KPI Strip Cards ──────────────────────────────────────────── */
+.astra-kpi-card {
+  background: rgba(22, 31, 51, 0.72);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.15rem;
+  height: 100%;
+}
+
+.astra-kpi-label {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.35rem;
+}
+
+.astra-kpi-value {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.astra-kpi-unit {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.astra-kpi-meta {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
 }
 
 /* ─── Cards & Container Systems ────────────────────────────────── */
@@ -182,21 +378,21 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
-  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
   overflow: hidden;
 }
 
 .astra-card:hover {
-  border-color: rgba(255, 255, 255, 0.15);
-  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
 .astra-card-header {
-  padding: 1.1rem 1.4rem 0.85rem;
+  padding: 1.05rem 1.35rem 0.85rem;
   border-bottom: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.75rem;
 }
 
 .astra-card-title {
@@ -205,69 +401,121 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
   letter-spacing: -0.01em;
   margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
 }
 
 .astra-card-icon {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
 }
 
 .astra-card-body {
   padding: 1.35rem;
 }
 
+.astra-header-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.22rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+  white-space: nowrap;
+}
+
+.astra-card-footer-note {
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.astra-inline-action {
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: none;
+  color: var(--accent-primary-light);
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.astra-inline-action:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
 /* ─── Leave Balance Components ───────────────────────────────── */
 .leave-balance-item {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.2rem;
 }
-.leave-balance-item:last-child { margin-bottom: 0; }
+.leave-balance-item:last-child {
+  margin-bottom: 0;
+}
 
 .leave-label {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5rem;
   margin-bottom: 0.45rem;
 }
+
 .leave-name {
-  font-size: 0.85rem;
+  font-size: 0.86rem;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: var(--text-primary);
 }
+
+.leave-subtext {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+
 .leave-badge {
-  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.74rem;
   font-weight: 700;
   padding: 0.2rem 0.65rem;
   border-radius: 20px;
+  white-space: nowrap;
 }
 
 .leave-badge-sick {
-  background: rgba(244, 63, 94, 0.12);
+  background: rgba(244, 63, 94, 0.14);
   color: #fda4af;
-  border: 1px solid rgba(244, 63, 94, 0.25);
+  border: 1px solid rgba(244, 63, 94, 0.3);
 }
 .leave-badge-casual {
-  background: rgba(245, 158, 11, 0.12);
+  background: rgba(245, 158, 11, 0.14);
   color: #fde047;
-  border: 1px solid rgba(245, 158, 11, 0.25);
+  border: 1px solid rgba(245, 158, 11, 0.3);
 }
 .leave-badge-earned {
-  background: rgba(16, 185, 129, 0.12);
+  background: rgba(16, 185, 129, 0.14);
   color: #6ee7b7;
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .leave-bar-track {
   height: 8px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.06);
   border-radius: 10px;
   overflow: hidden;
 }
 .leave-bar-fill {
   height: 100%;
   border-radius: 10px;
-  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .leave-bar-sick {
   background: linear-gradient(90deg, #f43f5e, #fb7185);
@@ -279,43 +527,132 @@ h1, h2, h3, h4, h5, h6 {
   background: linear-gradient(90deg, #059669, #10b981);
 }
 
-/* ─── List Items & Timelines ──────────────────────────────────── */
+/* ─── List Items, Filters & Status Badges ────────────────────── */
+.astra-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.24rem 0.65rem;
+  border-radius: 999px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.astra-filter-chip:hover,
+.astra-filter-chip.active {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: var(--accent-primary-light);
+}
+
+.astra-preset-chip {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.73rem;
+  font-weight: 500;
+  padding: 0.32rem 0.7rem;
+  border-radius: 8px;
+  line-height: 1.3;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.astra-preset-chip:hover {
+  background: rgba(16, 185, 129, 0.14);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: var(--accent-primary-light);
+}
+
 .astra-list-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.9rem 1.4rem;
+  padding: 0.85rem 1.35rem;
   border-bottom: 1px solid var(--border-subtle);
   transition: background-color 0.2s;
 }
-.astra-list-item:last-child { border-bottom: none; }
+.astra-list-item:last-child {
+  border-bottom: none;
+}
 .astra-list-item:hover {
   background: rgba(255, 255, 255, 0.02);
 }
 
 .leave-type-dot {
-  width: 9px; height: 9px; border-radius: 50%;
-  display: inline-block; margin-right: 10px; flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+  flex-shrink: 0;
 }
-.dot-sick    { background: #f43f5e; box-shadow: 0 0 8px rgba(244, 63, 94, 0.5); }
-.dot-casual  { background: #f59e0b; box-shadow: 0 0 8px rgba(245, 158, 11, 0.5); }
-.dot-earned  { background: #10b981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); }
+.dot-sick   { background: #f43f5e; box-shadow: 0 0 8px rgba(244, 63, 94, 0.5); }
+.dot-casual { background: #f59e0b; box-shadow: 0 0 8px rgba(245, 158, 11, 0.5); }
+.dot-earned { background: #10b981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); }
 
 .leave-type-name {
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   font-weight: 600;
   color: var(--text-primary);
   text-transform: capitalize;
 }
+
+.leave-reason {
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+  max-width: 220px;
+}
+
 .leave-date {
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   color: var(--text-muted);
   margin-top: 2px;
 }
+
+.astra-status-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.14rem 0.5rem;
+  border-radius: 999px;
+  line-height: 1;
+}
+
+.status-approved {
+  background: rgba(16, 185, 129, 0.14);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.status-pending {
+  background: rgba(245, 158, 11, 0.14);
+  color: #fde047;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+.status-rejected {
+  background: rgba(244, 63, 94, 0.14);
+  color: #fda4af;
+  border: 1px solid rgba(244, 63, 94, 0.3);
+}
+
 .leave-days-pill {
+  display: inline-flex;
+  align-items: center;
   font-size: 0.75rem;
   font-weight: 700;
-  padding: 0.2rem 0.65rem;
+  padding: 0.22rem 0.65rem;
   border-radius: 20px;
   background: rgba(16, 185, 129, 0.12);
   color: #6ee7b7;
@@ -329,12 +666,22 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
 }
 .meeting-date {
-  font-size: 0.78rem;
-  color: var(--accent-amber);
+  font-size: 0.76rem;
+  color: var(--accent-amber-light);
   margin-top: 3px;
   display: flex;
   align-items: center;
-  gap: 5px;
+}
+.astra-meeting-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(6, 182, 212, 0.12);
+  color: #38bdf8;
+  border: 1px solid rgba(6, 182, 212, 0.28);
 }
 
 /* ─── Empty States ───────────────────────────────────────────── */
@@ -344,21 +691,18 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-muted);
   font-size: 0.85rem;
 }
-.astra-empty-icon { font-size: 1.8rem; margin-bottom: 0.5rem; opacity: 0.4; }
 
-/* ─── AI Banner ──────────────────────────────────────────────── */
+/* ─── AI Banner & Instant Workflows ──────────────────────────── */
 .astra-ai-banner {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(6, 182, 212, 0.06));
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.09), rgba(6, 182, 212, 0.06));
+  border: 1px solid rgba(16, 185, 129, 0.25);
   border-radius: var(--radius-lg);
-  padding: 1.25rem 1.6rem;
-  display: flex;
-  align-items: center;
-  gap: 1.2rem;
+  padding: 1.35rem 1.5rem;
   margin-top: 2rem;
   position: relative;
   overflow: hidden;
 }
+
 .astra-ai-banner-icon {
   width: 44px;
   height: 44px;
@@ -368,32 +712,97 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   color: var(--accent-primary-light);
   flex-shrink: 0;
 }
+
 .astra-ai-banner-title {
-  font-size: 0.95rem;
+  font-size: 0.96rem;
   font-weight: 700;
   color: var(--accent-primary-light);
-  margin-bottom: 3px;
 }
+
 .astra-ai-banner-text {
-  font-size: 0.82rem;
+  font-size: 0.83rem;
   color: var(--text-secondary);
   margin: 0;
 }
+
 .astra-ai-badge {
-  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
   background: linear-gradient(135deg, var(--accent-primary), var(--accent-cyan));
   color: #0b0f19;
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 800;
-  padding: 0.3rem 0.75rem;
+  padding: 0.22rem 0.65rem;
   border-radius: 20px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
+  line-height: 1;
   white-space: nowrap;
-  flex-shrink: 0;
+}
+
+.astra-banner-launch-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  gap: 0.45rem;
+  background: var(--accent-primary);
+  color: #0b0f19;
+  border: none;
+  font-size: 0.82rem;
+  font-weight: 800;
+  padding: 0 1.1rem;
+  border-radius: 8px;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: var(--shadow-emerald);
+  transition: all 0.2s ease;
+}
+
+.astra-banner-launch-btn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.astra-workflow-strip {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.astra-workflow-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.astra-workflow-chip {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(11, 15, 25, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.34rem 0.82rem;
+  border-radius: 999px;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.astra-workflow-chip:hover {
+  background: rgba(16, 185, 129, 0.16);
+  border-color: rgba(16, 185, 129, 0.45);
+  color: #fff;
 }
 
 /* ─── Forms & Inputs ─────────────────────────────────────────── */
@@ -402,61 +811,65 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2.5rem 1rem;
+  padding: 2rem 0.75rem;
 }
 
 .astra-auth-card {
   width: 100%;
   max-width: 440px;
-  background: rgba(22, 31, 51, 0.85);
+  background: rgba(22, 31, 51, 0.88);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-subtle);
-  border-radius: 24px;
-  padding: 2.5rem 2.25rem;
+  border-radius: 22px;
+  padding: 2.25rem 2rem;
   box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.6);
 }
 
 .astra-auth-logo {
   text-align: center;
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.6rem;
 }
 .astra-auth-logo-icon {
-  width: 60px; height: 60px;
+  width: 56px;
+  height: 56px;
   background: linear-gradient(135deg, var(--accent-primary), var(--accent-cyan));
-  border-radius: 18px;
+  border-radius: 16px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   color: #0b0f19;
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.8rem;
   box-shadow: var(--shadow-emerald);
 }
 .astra-auth-title {
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   font-weight: 800;
   color: var(--text-primary);
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.3rem;
 }
 .astra-auth-subtitle {
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   color: var(--text-secondary);
+  margin-bottom: 0;
 }
 
-.astra-form-group { margin-bottom: 1.15rem; }
+.astra-form-group {
+  margin-bottom: 1.1rem;
+}
 .astra-form-label {
   display: block;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 700;
   color: var(--text-secondary);
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.4rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 .astra-form-input {
   width: 100%;
-  background: rgba(11, 15, 25, 0.6);
+  background: rgba(11, 15, 25, 0.65);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
   color: var(--text-primary);
@@ -468,9 +881,29 @@ h1, h2, h3, h4, h5, h6 {
 }
 .astra-form-input:focus {
   border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.16);
 }
-.astra-form-input::placeholder { color: var(--text-muted); }
+.astra-form-input::placeholder {
+  color: var(--text-muted);
+}
+
+.astra-password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  padding: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.astra-password-toggle:hover {
+  color: var(--text-primary);
+}
 
 select.astra-form-input option {
   background: #111827;
@@ -480,60 +913,77 @@ select.astra-form-input option {
 /* Button System */
 .astra-btn-primary {
   width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
   background: linear-gradient(135deg, var(--accent-primary), #059669);
   border: none;
   border-radius: var(--radius-sm);
   color: #fff;
   font-size: 0.9rem;
   font-weight: 700;
-  padding: 0.8rem;
+  padding: 0.78rem 1rem;
+  line-height: 1.2;
   cursor: pointer;
   transition: all 0.2s ease;
   font-family: var(--font-sans);
   letter-spacing: 0.02em;
   box-shadow: var(--shadow-emerald);
 }
-.astra-btn-primary:hover {
+.astra-btn-primary:hover:not(:disabled) {
   transform: translateY(-1px);
   filter: brightness(1.08);
 }
-.astra-btn-primary:active { transform: translateY(0); }
+.astra-btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
 .astra-btn-primary:disabled {
-  opacity: 0.6;
+  opacity: 0.65;
   cursor: not-allowed;
   transform: none;
 }
 
 .astra-btn-ghost {
   width: 100%;
-  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
-  color: var(--text-secondary);
+  color: var(--text-primary);
   font-size: 0.88rem;
   font-weight: 600;
-  padding: 0.7rem;
+  padding: 0.72rem 1rem;
+  line-height: 1.2;
   cursor: pointer;
   transition: all 0.2s ease;
   font-family: var(--font-sans);
-  margin-top: 0.75rem;
 }
-.astra-btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.04);
+.astra-btn-ghost:hover:not(:disabled) {
+  background: rgba(16, 185, 129, 0.08);
   border-color: var(--accent-primary);
   color: var(--accent-primary-light);
+}
+.astra-btn-ghost:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .astra-divider {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin: 1.35rem 0;
+  margin: 1.25rem 0;
   color: var(--text-muted);
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
-.astra-divider::before, .astra-divider::after {
+.astra-divider::before,
+.astra-divider::after {
   content: '';
   flex: 1;
   height: 1px;
@@ -543,8 +993,8 @@ select.astra-form-input option {
 .astra-auth-switch {
   text-align: center;
   margin-top: 1.35rem;
-  font-size: 0.83rem;
-  color: var(--text-muted);
+  font-size: 0.84rem;
+  color: var(--text-secondary);
 }
 .astra-auth-switch button {
   background: none;
@@ -553,13 +1003,15 @@ select.astra-form-input option {
   font-weight: 700;
   cursor: pointer;
   padding: 0;
-  margin-left: 4px;
+  margin-left: 5px;
 }
-.astra-auth-switch button:hover { text-decoration: underline; }
+.astra-auth-switch button:hover {
+  text-decoration: underline;
+}
 
 .astra-alert-error {
-  background: rgba(244, 63, 94, 0.12);
-  border: 1px solid rgba(244, 63, 94, 0.3);
+  background: rgba(244, 63, 94, 0.14);
+  border: 1px solid rgba(244, 63, 94, 0.35);
   border-radius: var(--radius-sm);
   color: #fda4af;
   font-size: 0.83rem;
@@ -571,6 +1023,7 @@ select.astra-form-input option {
 .btn-emerald {
   background: var(--accent-primary) !important;
   color: #0b0f19 !important;
+  border: 1px solid var(--accent-primary) !important;
   box-shadow: var(--shadow-emerald);
 }
 .btn-dark-subtle {
@@ -584,32 +1037,95 @@ select.astra-form-input option {
 }
 
 /* ─── Scrollbars & Utility Animations ───────────────────────── */
-.custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
 
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-.spin { animation: spin 1s linear infinite; display: inline-block; }
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.spin {
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(14px); }
+  from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.fade-up { animation: fadeUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.fade-up {
+  animation: fadeUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
 
-/* ─── Responsive Adjustments ─────────────────────────────────── */
+/* ─── Responsive Adjustments (Mobile 320px+, Tablet 768px+, Desktop) ─── */
 @media (max-width: 991.98px) {
   .astra-navbar .navbar-collapse {
     background: rgba(17, 24, 39, 0.98);
-    padding: 1.25rem;
+    padding: 1rem;
     border-radius: var(--radius-lg);
-    margin-top: 0.85rem;
+    margin-top: 0.75rem;
     border: 1px solid var(--border-subtle);
+  }
+  .astra-nav-menu {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+  .nav-link-custom {
+    justify-content: flex-start;
+    padding: 0 0.85rem;
+    height: 40px;
+  }
+  .astra-welcome {
+    padding: 0.25rem 0.85rem;
+    height: auto;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 0.65rem;
+    margin-top: 0.2rem;
+  }
+  .astra-logout-btn,
+  .astra-nav-cta {
+    width: 100%;
+    height: 40px;
+    border-radius: var(--radius-sm);
   }
 }
 
-/* ─── AI Terminal Container (Mobile Friendly) ────────────────── */
 @media (max-width: 600px) {
+  .astra-nav-container {
+    padding-left: 0.9rem !important;
+    padding-right: 0.9rem !important;
+  }
+  .astra-page {
+    padding: 1.35rem 0.25rem;
+  }
+  .astra-auth-card {
+    padding: 1.75rem 1.25rem;
+  }
+  .astra-card-header {
+    padding: 0.95rem 1rem 0.75rem;
+  }
+  .astra-card-body {
+    padding: 1rem;
+  }
+  .astra-list-item {
+    padding: 0.75rem 1rem;
+  }
+  .astra-ai-banner {
+    padding: 1.1rem;
+  }
+  .astra-banner-launch-btn {
+    width: 100%;
+  }
   .astra-terminal-container {
     left: 0 !important;
     right: 0 !important;
@@ -617,7 +1133,7 @@ select.astra-form-input option {
     top: auto !important;
     width: 100vw !important;
     max-width: 100vw !important;
-    height: 72vh !important;
+    height: 75vh !important;
     border-radius: 16px 16px 0 0 !important;
   }
   .astra-terminal-container.astra-terminal-minimized {

@@ -1,289 +1,202 @@
-# Astra HR: AI-Powered HR Assistant
-
+# Astra HR: AI-Powered HR & Career Assistant
 
 ---
 
-A MERN Stack Astra HR system to manage employee leaves, schedule meetings, and interact with an AI Assistant via a custom terminal widget. <br>
-Built with a React frontend, Express/Node backend, MongoDB database.
+A full-stack MERN (MongoDB, Express.js, React, Node.js) HR operations and career intelligence platform to manage employee leaves, schedule meetings, query company policies via RAG, and interact with an autonomous AI Assistant through a real-time Server-Sent Events (SSE) terminal widget.
 
 ---
 
 ## 🎥 Demo Video
-Watch a walkthrough (5-7 minutes) of all major features of this app
-Please click on images it will take you to the google drive video 👇
+Watch a walkthrough (5–7 minutes) of all major features of this app.
+Click the preview below to watch the Google Drive walkthrough video 👇
 
 [![Watch the demo](assets/video.png)](https://drive.google.com/file/d/1P1Pq9k4xdWpSpqKXvu17sKcXCCcea0Fw/view?usp=sharing)
-
 
 ---
 
 ## Quick Start
 
-```
+```bash
 git clone https://github.com/Sourabhpande532/AstraAIs.git
 cd AstraAI
+
+# 1. Start Backend Server
+cd ai-server
 npm install
-npm run dev  # or `npm start` / `yarn dev`
+npm start
+
+# 2. Start Frontend Client (in a new terminal)
+cd ../ai-client
+npm install
+npm run dev
 ```
 
 ---
 
 ## Technologies
 
-- React Js (Vite)
-- Redux Toolkit
-- React Router
-- Node Js
-- Express Js
-- MongoDB
-- Server-Sent Events (SSE)
-- RESTful APIs
+- **Frontend:** React 19 (Vite), TypeScript, Redux Toolkit, React Router, Bootstrap 5, Custom CSS3 Design System
+- **Backend:** Node.js, Express.js (MVC Architecture)
+- **Database:** MongoDB & Mongoose
+- **Authentication:** Stateless JWT (`jsonwebtoken`) & `bcryptjs`
+- **AI & Streaming:** OpenAI / OpenRouter SDK, Server-Sent Events (SSE), Agentic Tool Calling, Retrieval-Augmented Generation (RAG)
 
 ---
 
-## Reference 
+## Reference
 
-![](/assets/dashboard.png)
+![Astra HR Dashboard](/assets/dashboard.png)
 
 ---
 
 ## Features
 
-**Employee Dashboard**
+**1. Employee Operations Dashboard**
+- Executive KPI summary strip tracking available annual quota (`37` total days), requests, and upcoming syncs
+- Visual leave balance progress bars (`Sick: 10d`, `Casual: 12d`, `Earned: 15d`)
+- Recent leave request history with status badges (`Approved`, `Pending`, `Rejected`), reasons, and type filters
+- Chronological upcoming meetings list with relative date badges (`Today`, `Tomorrow`, `Upcoming`)
 
-- Overview of leave balances with visual progress bars (`Sick`, `Casual`, `Earned`)
-- Recent leave requests history and status tracking
-- Upcoming scheduled meetings with dates and titles
+**2. Agentic AI HR Terminal Widget (SSE)**
+- Draggable, minimizable, responsive terminal interface accessible across all authenticated views
+- Real-time streaming execution feedback via Server-Sent Events (SSE)
+- Multi-step agentic tool calling (`checkLeaveBalance`, `applyForLeave`, `scheduleMeeting`, `generateInterviewQuestions`)
+- Grounded HR Policy RAG engine citing exact sections from the Astra HR Handbook
 
-**AI HR Terminal Widget**
+**3. Career AI Upgrade Suite**
+- **Roadmap Generator:** Generates structured month-by-month learning curriculums in strict JSON format
+- **Interview Simulator:** Produces role-tailored technical questions with difficulty tiers, time limits, and hints
+- **Knowledge Base (RAG):** Answers career and policy questions from a verified internal knowledge base with source citations
+- **Agentic Career Planner:** Deconstructs career goals into learning plans, recommended projects, and interview prep
 
-- Draggable, minimizable, custom-built AI terminal interface
-- Real-time streaming responses via Server-Sent Events (SSE)
-- Agentic execution for multi-step prompts (e.g., checking leave balance -> applying for leave -> scheduling doctor appointment)
-
-**Leave Management**
-
-- Check current leave balances
-- Apply for leaves automatically through AI or manually
-- Validation against available leave balance
-
-**Meeting Scheduling**
-
-- Schedule meetings dynamically via AI natural language processing
-- Meetings are instantly synced with the frontend via Redux state
-
-**Authentication**
-
-- Secure Employee Login and Registration
-- Quick "Guest Login" feature for easy access
-
-**Responsive Premium UI**
-
-- Custom dark mode, glassmorphism cards, and animated gradient bars
-- Mobile and desktop friendly layout
+**4. Authentication & Security**
+- Employee Sign In and Registration with password hashing and JWT verification
+- One-click **Continue as Guest Employee** demo flow with pre-seeded leave quotas
 
 ---
 
 ## API Reference
 
-### GET /api/dashboard
-
-Retrieve employee dashboard data including leaves and meetings.
-Sample Response:
-
-```
-{ 
-  "leaves": [{ "_id": "...", "type": "sick", "days": 1, "status": "approved", "createdAt": "..." }],
-  "meetings": [{ "_id": "...", "title": "Doctor Appointment", "date": "...", "createdAt": "..." }]
+### `GET /api/hr/dashboard`
+Retrieve authenticated employee profile, leave history, and upcoming meetings.
+```json
+{
+  "user": {
+    "_id": "...",
+    "name": "Jane Doe",
+    "email": "jane@company.com",
+    "leaveBalance": { "sick": 10, "casual": 12, "earned": 15 }
+  },
+  "leaves": [
+    { "_id": "...", "type": "sick", "days": 1, "reason": "I have a fever", "status": "approved", "createdAt": "..." }
+  ],
+  "meetings": [
+    { "_id": "...", "title": "Doctor's Appointment", "date": "...", "createdAt": "..." }
+  ]
 }
 ```
 
-### POST /api/auth/login
-
-Authenticate an employee and get token.
-Sample Response:
-
-```
-{ 
-  "_id": "...", 
-  "name": "Jane Doe", 
-  "email": "jane@company.com", 
-  "token": "...", 
-  "leaveBalance": { "sick": 12, "casual": 10, "earned": 15 } 
+### `POST /api/auth/login`
+Authenticate an existing employee and receive a JWT token.
+```json
+{
+  "_id": "...",
+  "name": "Jane Doe",
+  "email": "jane@company.com",
+  "isGuest": false,
+  "leaveBalance": { "sick": 10, "casual": 12, "earned": 15 },
+  "token": "..."
 }
 ```
 
-### POST /api/auth/register
-
-Register a new employee.
-Sample Response:
-
-```
-{ 
-  "_id": "...", 
-  "name": "Jane Doe", 
-  "email": "jane@company.com", 
-  "token": "...", 
-  "leaveBalance": { "sick": 12, "casual": 10, "earned": 15 } 
+### `POST /api/auth/register`
+Register a new employee account.
+```json
+{
+  "_id": "...",
+  "name": "Jane Doe",
+  "email": "jane@company.com",
+  "isGuest": false,
+  "leaveBalance": { "sick": 10, "casual": 12, "earned": 15 },
+  "token": "..."
 }
 ```
 
-### POST /api/auth/guest
-
-Quick login as a guest employee.
-Sample Response:
-
-```
-{ 
-  "_id": "...", 
-  "name": "Guest User", 
-  "email": "guest@astra.com", 
-  "token": "...", 
-  "leaveBalance": { "sick": 12, "casual": 10, "earned": 15 } 
+### `POST /api/auth/guest`
+Instant login as a pre-seeded guest employee.
+```json
+{
+  "_id": "...",
+  "name": "Guest Employee 482910",
+  "email": "guest482910@astrahr.com",
+  "isGuest": true,
+  "leaveBalance": { "sick": 10, "casual": 12, "earned": 15 },
+  "token": "..."
 }
 ```
 
-### POST /api/ai/chat/stream
-
-Send a prompt to the AI Agent and receive Server-Sent Events stream.
-Sample Request Body:
-
+### `POST /api/ai/chat/stream`
+Send a natural language command to the Agentic HR Terminal and receive a real-time Server-Sent Events stream.
+```json
+{ "message": "Apply for 1 day sick leave, I have a fever" }
 ```
-{ "message": "Apply for 1 day sick leave" }
-```
-
 Sample Streaming Events:
-
-```
+```text
 event: status
-data: {"text": "Thinking...", "type": "thinking"}
+data: {"text": "🔍 Analyzing your request...", "type": "thinking"}
+
+event: plan
+data: {"steps": 1, "goal": "Apply 1 day sick leave"}
+
+event: step_start
+data: {"step": 1, "function": "applyForLeave", "text": "⚡ Step 1: Calling applyForLeave..."}
 
 event: step_result
-data: {"success": true, "function": "applyForLeave", "result": {"days": 1, "type": "sick"}}
+data: {"step": 1, "function": "applyForLeave", "success": true, "result": {"days": 1, "type": "sick", "remainingBalance": 9}}
 
 event: done
-data: {"reply": "I have applied for your sick leave."}
+data: {"reply": "✅ Applied 1 day(s) of sick leave. Remaining: 9 days."}
 ```
+
+### Career AI Suite Endpoints (`Protected`)
+- `POST /api/career/roadmap` — `{ role, skillLevel, timeline }`
+- `POST /api/career/interview` — `{ role, experience, skills }`
+- `POST /api/career/knowledge` — `{ question }`
+- `POST /api/career/planner` — `{ prompt }`
 
 ---
 
 ## Environment Setup
 
-**Backend (/.env)**
-
-```
-# Server
-PORT=5000
-NODE_ENV=development
-
-# Database
-MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/astra_hr
+**Backend (`ai-server/.env`)**
+```env
+PORT=5001
+MONGO_URL=mongodb+srv://<username>:<password>@cluster.mongodb.net/astrahr
+FRONTEND_URL=http://localhost:5173
 JWT_SECRET=your_jwt_secret_key
-
-# AI Integration
-GEMINI_API_KEY=your_gemini_api_key
-
+OPENAI_API_KEY=your_openai_or_openrouter_api_key
 ```
 
-**Frontend**
-
+**Frontend (`ai-client/.env`)**
+```env
+VITE_API_URL=http://localhost:5001
 ```
-# API Base URL (if using Vite)
-VITE_API_URL=http://localhost:5000/api
 
-```
+---
+
+## Available Scripts
+
+**Frontend (`ai-client`)**
+- `npm run dev` — Start Vite development server
+- `npm run build` — Type-check (`tsc -b`) and build production bundle
+- `npm run lint` — Run ESLint across all TypeScript/React files
+- `npm run preview` — Preview production build locally
+
+**Backend (`ai-server`)**
+- `npm start` — Run Express server with `nodemon`
 
 ---
 
 ## Contact
 
-For bugs or feature requests, please reach out to [sourabhpande43@gmail.com](mailto:sourabhpande43@gmail.com)
-
----
-
-## Planning 
-
-## 1. Introduction
-> "Astra HR is a modern, AI-first Human Resources dashboard. Instead of forcing employees to navigate through complex menus to apply for leaves, check policies, or schedule meetings, I built an integrated **Agentic AI Terminal**. Employees can simply type what they want (e.g., 'Apply for 1 day of sick leave and schedule a doctor's appointment'), and the AI autonomous agent breaks down the request, executes the necessary backend functions in real-time, and updates the user's dashboard seamlessly."
-
-### The Problem it Solves:
-Traditional HR software is clunky and heavily menu-driven. Finding specific company policies or doing multi-step tasks (checking balance -> applying for leave -> scheduling a sync) requires too many clicks. 
-
-### The Solution:
-A beautiful, dark-mode dashboard paired with a smart, draggable AI widget that understands natural language, executes multi-step plans, and streams real-time execution feedback to the user.
-
----
-
-## 2. Tech Stack & Architecture
-
-When asked about your tech stack, here is how you explain your choices:
-
-- **Frontend (Client):** 
-  - **React (Vite) & TypeScript:** Chosen for fast hot-module replacement and type safety.
-  - **Redux Toolkit:** Used for predictable state management (Auth state, Dashboard data).
-  - **Custom CSS + Glassmorphism:** A premium, modern dark-mode UI designed from scratch rather than relying on generic component libraries.
-- **Backend (Server):**
-  - **Node.js & Express:** Lightweight and fast for building RESTful APIs.
-  - **MongoDB & Mongoose:** NoSQL database, perfect for flexible schemas like user profiles, leave requests, and meetings.
-- **AI Integration:**
-  - **Agentic Workflow:** The AI doesn't just generate text; it triggers internal functions (Function Calling / Tool Use). It streams data via **Server-Sent Events (SSE)** so the user sees real-time progress (e.g., "Calling scheduleMeeting... ✅ Success").
-
----
-
-## 3. Core Features & Specs
-
-### A. Employee Dashboard
-- **Leave Balances:** Visual progress bars tracking Sick, Casual, and Earned leaves.
-- **Recent Leaves:** A list of past leave requests with status indicators.
-- **Upcoming Meetings:** Chronological list of scheduled meetings.
-- **State Management:** Dashboard automatically refetches and updates instantly when the AI performs an action (e.g., applying for leave).
-
-### B. Astra HR Terminal (The Star Feature)
-- **Draggable & Minimizable:** A custom-built floating terminal that can be dragged around the screen and minimized into a compact title bar to avoid blocking the UI.
-- **Streaming Responses:** Uses Server-Sent Events to stream AI thought processes, steps, and results dynamically.
-- **Agentic Capabilities:**
-  - `checkLeaveBalance`: Retrieves current user balances.
-  - `applyForLeave`: Validates balance and submits a leave request.
-  - `scheduleMeeting`: Books a calendar event.
-  - `generateInterviewQuestions`: Generates tailored technical questions based on job roles.
-  - **RAG (Retrieval-Augmented Generation):** Can answer specific questions about company policies (e.g., Maternity leave rules).
-
----
-
-## 4. How to Demo / Test the App in an Interview
-
-When you share your screen or demonstrate the app, follow this exact flow to "Wow" the interviewer:
-
-### Step 1: The UI & Auth
-1. Start at the login screen. Mention the **"Premium Dark Mode & Glassmorphism"** design.
-2. Use the **Guest Login** button to quickly bypass registration and jump straight into the app.
-
-### Step 2: The Dashboard
-1. Briefly explain the dashboard structure: "Here we have our leave balances, request history, and upcoming meetings pulled from MongoDB via Redux."
-2. Point out that the leave balances are currently full.
-
-### Step 3: The AI Terminal (The "Wow" Moment)
-1. Click the floating **AI Button** on the bottom right.
-2. Drag the terminal around by its header to show off the custom physics/UI work.
-3. **Run a single-step prompt:** Click the suggestion *"Check my leave balance"*.
-   - *What to say:* "Notice how the AI doesn't just chat—it calls a backend function, retrieves my real database values, and renders them in the UI."
-4. **Run a multi-step prompt:** Type *"Check my sick leave, apply for 1 day because I have a fever, and schedule a doctor's appointment for tomorrow at 10 AM."*
-   - *What to say:* "This is where the Agentic AI shines. It breaks my complex request into a multi-step plan. You can see it streaming the steps: first it checks if I have enough balance, then it applies for the leave, and finally it schedules the meeting."
-5. **The Reactivity:** Close the terminal and show them the Dashboard.
-   - *What to say:* "Because of Redux, the dashboard instantly reacted to the AI's actions. You can see my Sick Leave balance went down, the request is in the history, and the meeting is on my calendar."
-
----
-
-## 5. Potential Interview Questions & How to Answer
-
-**Q: "Why did you build the terminal yourself instead of using a standard chat UI?"**
-*Answer:* "Standard chat UIs take up a lot of screen real estate and obscure the dashboard. I wanted a developer-friendly, non-intrusive widget. The draggable, minimizable terminal feels premium, like macOS, and allows the user to monitor AI actions without losing context of their dashboard."
-
-**Q: "How does the AI actually execute the code?"**
-*Answer:* "I implemented Function Calling (Tool Use). When the user sends a prompt, the system prompt tells the LLM what backend functions it has access to (like `applyLeave`). The LLM returns a JSON object specifying which function to run and with what arguments. The Node.js backend executes that function, updates MongoDB, and streams the result back to the React frontend using Server-Sent Events (SSE)."
-
-**Q: "How do you handle state across the app?"**
-*Answer:* "I use Redux Toolkit. For instance, when the AI successfully books a leave, the frontend receives a `step_result` event with a success flag. I catch that event in the terminal component and dispatch a Redux action to re-fetch the dashboard data, keeping the UI perfectly in sync with the database."
-
-**Q: "What would you add to this in the future?"**
-*Answer:* "I would add WebSockets for real-time notifications if HR approves a leave, integrate real Google Calendar APIs for the meetings, and add a dedicated HR Admin panel to approve or reject employee requests."
+For questions or feedback, reach out to [sourabhpande43@gmail.com](mailto:sourabhpande43@gmail.com).

@@ -7,11 +7,24 @@ const generateToken = (id) => {
 
 const loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const email = req.body.email ? String(req.body.email).trim() : '';
+    const password = req.body.password ? String(req.body.password) : '';
+
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Please enter both email and password' });
+    }
+
     const user = await User.findOne({ email });
 
     if (user && (await user.matchPassword(password))) {
-      res.json({ _id: user._id, name: user.name, email: user.email, isGuest: user.isGuest, leaveBalance: user.leaveBalance, token: generateToken(user._id) });
+      res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isGuest: user.isGuest,
+        leaveBalance: user.leaveBalance,
+        token: generateToken(user._id),
+      });
     } else {
       res.status(401).json({ message: 'Invalid email or password' });
     }
@@ -22,14 +35,29 @@ const loginUser = async (req, res) => {
 
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    const userExists = await User.findOne({ email });
+    const name = req.body.name ? String(req.body.name).trim() : '';
+    const email = req.body.email ? String(req.body.email).trim() : '';
+    const password = req.body.password ? String(req.body.password) : '';
 
-    if (userExists) return res.status(400).json({ message: 'User already exists' });
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: 'Please provide name, email, and password' });
+    }
+
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
 
     const user = await User.create({ name, email, password });
     if (user) {
-      res.status(201).json({ _id: user._id, name: user.name, email: user.email, isGuest: user.isGuest, leaveBalance: user.leaveBalance, token: generateToken(user._id) });
+      res.status(201).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isGuest: user.isGuest,
+        leaveBalance: user.leaveBalance,
+        token: generateToken(user._id),
+      });
     } else {
       res.status(400).json({ message: 'Invalid user data' });
     }
@@ -45,10 +73,17 @@ const guestLogin = async (req, res) => {
       name: `Guest Employee ${randomNum}`,
       email: `guest${randomNum}@astrahr.com`,
       password: `guest_pass_${randomNum}`,
-      isGuest: true
+      isGuest: true,
     });
     if (user) {
-      res.status(201).json({ _id: user._id, name: user.name, email: user.email, isGuest: user.isGuest, leaveBalance: user.leaveBalance, token: generateToken(user._id) });
+      res.status(201).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isGuest: user.isGuest,
+        leaveBalance: user.leaveBalance,
+        token: generateToken(user._id),
+      });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
