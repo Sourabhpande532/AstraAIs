@@ -45,7 +45,7 @@ npm run dev
 
 ## Reference
 
-![Astra HR Dashboard](/assets/dashboard.png)
+![Astra HR Dashboard](/assets/landing.png)
 
 ---
 
