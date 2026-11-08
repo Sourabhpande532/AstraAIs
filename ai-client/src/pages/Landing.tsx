@@ -63,13 +63,13 @@ const Landing = () => {
         {/* Live Agentic Workflow Preview */}
         <div className="landing-preview-card">
           <div className="landing-preview-header">
-            <div className="d-flex align-items-center gap-2">
-              <span className="preview-dot dot-red"></span>
-              <span className="preview-dot dot-amber"></span>
-              <span className="preview-dot dot-green"></span>
-              <span className="preview-header-title ms-2">ASTRA_HR_AGENT — Live SSE Execution Flow</span>
+            <div className="d-flex align-items-center gap-2" style={{ minWidth: 0 }}>
+              <span className="preview-dot dot-red flex-shrink-0"></span>
+              <span className="preview-dot dot-amber flex-shrink-0"></span>
+              <span className="preview-dot dot-green flex-shrink-0"></span>
+              <span className="preview-header-title ms-1 text-truncate">ASTRA_HR_AGENT — Live SSE Execution Flow</span>
             </div>
-            <span className="preview-status-pill">Tool Calling + RAG</span>
+            <span className="preview-status-pill flex-shrink-0">Tool Calling + RAG</span>
           </div>
           <div className="landing-preview-body">
             <div className="preview-line preview-user">
@@ -169,18 +169,18 @@ const Landing = () => {
 
       {/* Bottom Callout */}
       <div className="landing-bottom-cta">
-        <div className="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
-          <div className="text-start">
-            <h2 className="h5 fw-bold text-light mb-1">
-              <FaMagic className="me-2" style={{ color: '#10b981' }} />
-              Ready to experience agentic HR operations?
+        <div className="landing-bottom-cta-inner">
+          <div className="landing-bottom-cta-content">
+            <h2 className="landing-bottom-cta-title">
+              <FaMagic className="me-2 flex-shrink-0" style={{ color: '#10b981' }} />
+              <span>Ready to experience agentic HR operations?</span>
             </h2>
-            <p className="text-secondary small mb-0">
+            <p className="landing-bottom-cta-desc">
               Jump straight in with one-click Guest Employee access—pre-loaded with 37 days of leave quota and full AI capabilities.
             </p>
           </div>
-          <Link to={user ? '/dashboard' : '/auth'} className="btn-landing-primary flex-shrink-0">
-            {user ? 'Open My Dashboard' : 'Launch Instant Demo'} <FaArrowRight />
+          <Link to={user ? '/dashboard' : '/auth'} className="btn-landing-primary landing-bottom-cta-btn">
+            <span>{user ? 'Open My Dashboard' : 'Launch Instant Demo'}</span> <FaArrowRight />
           </Link>
         </div>
       </div>

@@ -37,9 +37,9 @@ const LeaveBalanceCard: React.FC<LeaveBalanceProps> = ({ balances }) => {
     >
       <div className="leave-balance-item">
         <div className="leave-label">
-          <div>
+          <div className="d-flex flex-wrap align-items-baseline gap-1">
             <span className="leave-name">Sick Leave</span>
-            <span className="leave-subtext ms-2">Paid medical quota</span>
+            <span className="leave-subtext">Paid medical quota</span>
           </div>
           <span className="leave-badge leave-badge-sick">
             {sick} / {ENTITLEMENTS.sick} Days
@@ -52,9 +52,9 @@ const LeaveBalanceCard: React.FC<LeaveBalanceProps> = ({ balances }) => {
 
       <div className="leave-balance-item">
         <div className="leave-label">
-          <div>
+          <div className="d-flex flex-wrap align-items-baseline gap-1">
             <span className="leave-name">Casual Leave</span>
-            <span className="leave-subtext ms-2">Personal & urgent</span>
+            <span className="leave-subtext">Personal &amp; urgent</span>
           </div>
           <span className="leave-badge leave-badge-casual">
             {casual} / {ENTITLEMENTS.casual} Days
@@ -67,9 +67,9 @@ const LeaveBalanceCard: React.FC<LeaveBalanceProps> = ({ balances }) => {
 
       <div className="leave-balance-item">
         <div className="leave-label">
-          <div>
+          <div className="d-flex flex-wrap align-items-baseline gap-1">
             <span className="leave-name">Earned Leave</span>
-            <span className="leave-subtext ms-2">Annual privilege</span>
+            <span className="leave-subtext">Annual privilege</span>
           </div>
           <span className="leave-badge leave-badge-earned">
             {earned} / {ENTITLEMENTS.earned} Days

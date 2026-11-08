@@ -20,14 +20,14 @@ const AiBanner: React.FC = () => {
 
   return (
     <div className="astra-ai-banner">
-      <div className="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 w-100">
-        <div className="d-flex align-items-start align-items-md-center gap-3">
-          <div className="astra-ai-banner-icon">
+      <div className="astra-ai-banner-top">
+        <div className="astra-ai-banner-header-row">
+          <div className="astra-ai-banner-icon" aria-hidden="true">
             <FaRobot />
           </div>
-          <div>
+          <div className="astra-ai-banner-heading-group">
             <div className="d-flex align-items-center gap-2 flex-wrap">
-              <div className="astra-ai-banner-title mb-0">AI HR Assistant & Agentic Command Bar</div>
+              <div className="astra-ai-banner-title mb-0">AI HR Assistant &amp; Agentic Command Bar</div>
               <span className="astra-ai-badge">SSE STREAMING READY</span>
             </div>
             <p className="astra-ai-banner-text mt-1">
@@ -48,7 +48,7 @@ const AiBanner: React.FC = () => {
 
       <div className="astra-workflow-strip mt-3 pt-3">
         <span className="astra-workflow-label">Instant Workflows:</span>
-        <div className="d-flex flex-wrap gap-2">
+        <div className="astra-workflow-chips">
           {QUICK_WORKFLOWS.map((wf) => (
             <button
               key={wf.label}

@@ -1,61 +1,56 @@
-const CACHE_NAME = 'astra-hr-v4';
-const OFFLINE_URL = '/index.html';
+const CACHE_NAME = 'astra-hr-v6';
+const STATIC_ASSETS = ['/favicon.svg', '/manifest.webmanifest'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll([
-        OFFLINE_URL,
-        '/favicon.svg',
-        '/manifest.webmanifest'
-      ]);
-    })
+    caches
+      .open(CACHE_NAME)
+      .then((cache) => cache.addAll(STATIC_ASSETS))
+      .catch(() => undefined)
   );
   self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames
-          .filter((name) => name !== CACHE_NAME)
-          .map((name) => caches.delete(name))
-      );
-    })
+    caches
+      .keys()
+      .then((cacheNames) =>
+        Promise.all(
+          cacheNames
+            .filter((name) => name !== CACHE_NAME)
+            .map((name) => caches.delete(name))
+        )
+      )
+      .catch(() => undefined)
   );
   self.clients.claim();
 });
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
-  
-  // Do not intercept API requests
-  if (event.request.url.includes('/api/')) return;
 
-  // For HTML navigation requests, ALWAYS do Network-First so recruiters always get the latest deployment
-  if (event.request.mode === 'navigate') {
-    event.respondWith(
-      fetch(event.request)
-        .then((networkResponse) => {
-          if (networkResponse && networkResponse.status === 200) {
-            const responseClone = networkResponse.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(OFFLINE_URL, responseClone));
-          }
-          return networkResponse;
-        })
-        .catch(() => caches.match(OFFLINE_URL))
-    );
+  let url;
+  try {
+    url = new URL(event.request.url);
+  } catch {
     return;
   }
 
-  // Bypass service worker for hashed JS/CSS assets - let browser and Vercel CDN handle them directly
-  if (event.request.url.includes('/assets/')) {
-    return;
-  }
+  // Only handle same-origin static icon/manifest requests.
+  // Let the browser and Vercel CDN handle all HTML navigations (/dashboard, /career, /auth),
+  // hashed /assets/* bundles, and /api/* requests directly so FetchEvent never rejects.
+  if (url.origin !== self.location.origin) return;
+  if (!STATIC_ASSETS.includes(url.pathname)) return;
 
-  // Fallback for static root assets
   event.respondWith(
-    fetch(event.request).catch(() => caches.match(event.request))
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse instanceof Response) {
+        return cachedResponse;
+      }
+      return fetch(event.request).catch(
+        () => new Response('', { status: 200, statusText: 'OK' })
+      );
+    })
   );
 });

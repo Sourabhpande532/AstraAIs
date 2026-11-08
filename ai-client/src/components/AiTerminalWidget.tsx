@@ -157,7 +157,7 @@ const AiTerminalWidget = () => {
     return (
       <button
         onClick={() => dispatch({ type: 'OPEN' })}
-        className="btn shadow-lg d-flex align-items-center justify-content-center"
+        className="btn shadow-lg d-flex align-items-center justify-content-center astra-terminal-fab"
         style={{
           position: 'fixed', bottom: 24, right: 24, zIndex: 9999,
           width: 60, height: 60, borderRadius: '50%',

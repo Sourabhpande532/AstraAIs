@@ -47,7 +47,7 @@ const Dashboard = () => {
           </p>
         </div>
 
-        <div className="d-flex align-items-center gap-2 flex-wrap">
+        <div className="astra-dashboard-actions d-flex align-items-center gap-2 flex-wrap">
           <button
             type="button"
             className="astra-action-btn-secondary"
@@ -121,14 +121,14 @@ const Dashboard = () => {
       </div>
 
       {/* Main 3-Column Operational Grid */}
-      <div className="row g-4">
-        <div className="col-lg-4">
+      <div className="row g-3 g-lg-4">
+        <div className="col-12 col-md-6 col-lg-4">
           <LeaveBalanceCard balances={user?.leaveBalance} />
         </div>
-        <div className="col-lg-4">
+        <div className="col-12 col-md-6 col-lg-4">
           <RecentLeavesCard leaves={leaves} />
         </div>
-        <div className="col-lg-4">
+        <div className="col-12 col-lg-4">
           <UpcomingMeetingsCard meetings={meetings} />
         </div>
       </div>

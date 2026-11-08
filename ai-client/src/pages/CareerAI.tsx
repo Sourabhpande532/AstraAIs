@@ -90,46 +90,45 @@ const CareerAI = () => {
 
       {/* Navigation Tabs */}
       <div
-        className="d-flex gap-2 mb-4 overflow-auto pb-2 custom-scrollbar"
+        className="astra-career-tabs mb-4"
         role="tablist"
         aria-label="Career AI Tools"
-        style={{ WebkitOverflowScrolling: 'touch' }}
       >
         <button
           type="button"
           role="tab"
           aria-selected={activeTab === 'roadmap'}
-          className={`btn btn-sm px-3 py-2 fw-semibold rounded-pill text-nowrap d-inline-flex align-items-center gap-2 ${activeTab === 'roadmap' ? 'btn-emerald' : 'btn-dark-subtle'}`}
+          className={`astra-career-tab-btn ${activeTab === 'roadmap' ? 'btn-emerald' : 'btn-dark-subtle'}`}
           onClick={() => handleTabSwitch('roadmap')}
         >
-          <FaGraduationCap /> <span>Roadmap Generator</span>
+          <FaGraduationCap className="flex-shrink-0" /> <span>Roadmap Generator</span>
         </button>
         <button
           type="button"
           role="tab"
           aria-selected={activeTab === 'interview'}
-          className={`btn btn-sm px-3 py-2 fw-semibold rounded-pill text-nowrap d-inline-flex align-items-center gap-2 ${activeTab === 'interview' ? 'btn-emerald' : 'btn-dark-subtle'}`}
+          className={`astra-career-tab-btn ${activeTab === 'interview' ? 'btn-emerald' : 'btn-dark-subtle'}`}
           onClick={() => handleTabSwitch('interview')}
         >
-          <FaUserTie /> <span>Interview Simulator</span>
+          <FaUserTie className="flex-shrink-0" /> <span>Interview Simulator</span>
         </button>
         <button
           type="button"
           role="tab"
           aria-selected={activeTab === 'knowledge'}
-          className={`btn btn-sm px-3 py-2 fw-semibold rounded-pill text-nowrap d-inline-flex align-items-center gap-2 ${activeTab === 'knowledge' ? 'btn-emerald' : 'btn-dark-subtle'}`}
+          className={`astra-career-tab-btn ${activeTab === 'knowledge' ? 'btn-emerald' : 'btn-dark-subtle'}`}
           onClick={() => handleTabSwitch('knowledge')}
         >
-          <FaQuestionCircle /> <span>Knowledge Base (RAG)</span>
+          <FaQuestionCircle className="flex-shrink-0" /> <span>Knowledge Base (RAG)</span>
         </button>
         <button
           type="button"
           role="tab"
           aria-selected={activeTab === 'planner'}
-          className={`btn btn-sm px-3 py-2 fw-semibold rounded-pill text-nowrap d-inline-flex align-items-center gap-2 ${activeTab === 'planner' ? 'btn-emerald' : 'btn-dark-subtle'}`}
+          className={`astra-career-tab-btn ${activeTab === 'planner' ? 'btn-emerald' : 'btn-dark-subtle'}`}
           onClick={() => handleTabSwitch('planner')}
         >
-          <FaMagic /> <span>Agentic Planner</span>
+          <FaMagic className="flex-shrink-0" /> <span>Agentic Planner</span>
         </button>
       </div>
 
