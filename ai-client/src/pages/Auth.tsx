@@ -47,15 +47,13 @@ const validateEmailField = (value: string): string => {
 };
 
 const validatePasswordField = (value: string, isLoginMode: boolean): string => {
-  if (!value) return 'Password is required.';
+  if (!value || !value.trim()) return 'Password is required.';
   if (isLoginMode) {
     if (value.length < 4) return 'Password must be at least 4 characters.';
     return '';
   }
   if (value.length < 6) return 'Password must be at least 6 characters long.';
-  if (!/[A-Za-z]/.test(value) || !/[0-9]/.test(value)) {
-    return 'Password must include at least one letter and one number.';
-  }
+  if (value.length > 128) return 'Password cannot exceed 128 characters.';
   return '';
 };
 
@@ -219,7 +217,7 @@ const Auth = () => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} noValidate>
+        <form onSubmit={handleSubmit} noValidate autoComplete="off">
           {!isLogin && (
             <div className="astra-form-group">
               <div className="d-flex justify-content-between align-items-center">
@@ -246,7 +244,7 @@ const Auth = () => {
                 onBlur={() => handleBlur('name')}
                 aria-invalid={Boolean(touched.name && fieldErrors.name)}
                 aria-describedby={fieldErrors.name ? 'auth-name-error' : undefined}
-                autoComplete="name"
+                autoComplete="off"
               />
               {touched.name && fieldErrors.name && (
                 <div id="auth-name-error" className="astra-field-error" role="alert">
@@ -282,7 +280,9 @@ const Auth = () => {
               onBlur={() => handleBlur('email')}
               aria-invalid={Boolean(touched.email && fieldErrors.email)}
               aria-describedby={fieldErrors.email ? 'auth-email-error' : undefined}
-              autoComplete="email"
+              autoComplete="off"
+              data-lpignore="true"
+              data-1p-ignore="true"
             />
             {touched.email && fieldErrors.email && (
               <div id="auth-email-error" className="astra-field-error" role="alert">
@@ -304,21 +304,27 @@ const Auth = () => {
             <div className="position-relative">
               <input
                 id="auth-password"
-                type={showPassword ? 'text' : 'password'}
-                className={`astra-form-input pe-5 ${
+                type="text"
+                className={`astra-form-input pe-5 ${!showPassword ? 'astra-password-masked' : ''} ${
                   touched.password && fieldErrors.password
                     ? 'astra-input-invalid'
                     : touched.password && password
                     ? 'astra-input-valid'
                     : ''
                 }`}
-                placeholder={isLogin ? '••••••••' : 'Min 6 chars (letters & numbers)'}
+                placeholder={isLogin ? '••••••••' : 'Min 6 characters'}
                 value={password}
                 onChange={(e) => handlePasswordChange(e.target.value)}
                 onBlur={() => handleBlur('password')}
                 aria-invalid={Boolean(touched.password && fieldErrors.password)}
                 aria-describedby={fieldErrors.password ? 'auth-password-error' : undefined}
-                autoComplete={isLogin ? 'current-password' : 'new-password'}
+                autoComplete="off"
+                spellCheck={false}
+                autoCorrect="off"
+                autoCapitalize="off"
+                data-lpignore="true"
+                data-1p-ignore="true"
+                data-form-type="other"
               />
               <button
                 type="button"
@@ -354,7 +360,7 @@ const Auth = () => {
                   ))}
                 </div>
                 <div className="d-flex justify-content-between align-items-center mt-1">
-                  <span className="astra-strength-hint">Use 6+ characters with letters &amp; numbers</span>
+                  <span className="astra-strength-hint">Use 6+ characters (letters &amp; numbers recommended)</span>
                   <span
                     className="astra-strength-label"
                     style={{ color: passwordStrength.color }}

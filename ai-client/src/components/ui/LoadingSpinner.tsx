@@ -4,10 +4,19 @@ interface LoadingSpinnerProps {
   minHeight?: string;
 }
 
-const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ minHeight = '60vh' }) => {
+const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ minHeight = 'calc(100vh - 150px)' }) => {
   return (
-    <div className="d-flex justify-content-center align-items-center" style={{ minHeight }}>
-      <div className="spinner-border text-info" style={{ width: '3rem', height: '3rem', opacity: 0.5 }} />
+    <div
+      className="d-flex flex-column justify-content-center align-items-center w-100"
+      style={{ minHeight }}
+      role="status"
+      aria-live="polite"
+    >
+      <div
+        className="spinner-border"
+        style={{ width: '2.75rem', height: '2.75rem', color: '#10b981', opacity: 0.85 }}
+      />
+      <span className="text-secondary small mt-3">Loading workspace...</span>
     </div>
   );
 };

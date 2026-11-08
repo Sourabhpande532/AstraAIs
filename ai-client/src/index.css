@@ -50,6 +50,12 @@
 }
 
 /* NOTE: Do NOT set overflow-x: hidden on html, as that breaks position: sticky on the navbar */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 body {
   background-color: var(--bg-primary);
   background-image:
@@ -943,6 +949,10 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-muted);
 }
 
+.astra-password-masked {
+  -webkit-text-security: disc;
+}
+
 .astra-form-input.astra-input-invalid {
   border-color: rgba(244, 63, 94, 0.7) !important;
   box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.14);
@@ -1143,7 +1153,9 @@ select.astra-form-input option {
   background: rgba(11, 15, 25, 0.94);
   border-top: 1px solid var(--border-subtle);
   padding: 2.75rem 0 1.75rem;
-  margin-top: 3rem;
+  margin-top: auto;
+  flex-shrink: 0;
+  width: 100%;
 }
 
 .astra-footer-container {

@@ -19,7 +19,7 @@ function App() {
     <Router>
       <div className="d-flex flex-column min-vh-100">
         <Navbar />
-        <main className="container mt-3 pb-4 flex-grow-1">
+        <main className="container mt-3 pb-4 flex-grow-1" style={{ minHeight: 'calc(100vh - 140px)' }}>
           <Suspense fallback={<LoadingSpinner />}>
             <Routes>
               <Route path="/" element={<Landing />} />
