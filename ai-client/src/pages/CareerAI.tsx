@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import {
   FaGraduationCap,
   FaUserTie,
@@ -39,8 +40,15 @@ const PLANNER_PRESETS = [
   'Help me prepare for Backend Node.js and System Design interviews in 3 months.',
 ];
 
+const VALID_TABS = ['roadmap', 'interview', 'knowledge', 'planner'] as const;
+type CareerTab = (typeof VALID_TABS)[number];
+
 const CareerAI = () => {
-  const [activeTab, setActiveTab] = useState<'roadmap' | 'interview' | 'knowledge' | 'planner'>('roadmap');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [manualTab, setManualTab] = useState<CareerTab>('roadmap');
+  const tabParam = searchParams.get('tab') as CareerTab | null;
+  const activeTab: CareerTab =
+    tabParam && VALID_TABS.includes(tabParam) ? tabParam : manualTab;
   const [copied, setCopied] = useState(false);
 
   const {
@@ -63,8 +71,9 @@ const CareerAI = () => {
     handleAgenticPlanner,
   } = useCareerAI();
 
-  const handleTabSwitch = (tab: 'roadmap' | 'interview' | 'knowledge' | 'planner') => {
-    setActiveTab(tab);
+  const handleTabSwitch = (tab: CareerTab) => {
+    setManualTab(tab);
+    setSearchParams({ tab }, { replace: true });
     setResult(null);
     setError(null);
     setCopied(false);

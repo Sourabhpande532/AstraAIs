@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { useSelector } from 'react-redux'
 import type { RootState } from './store/store'
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 import Landing from './pages/Landing'
 import LoadingSpinner from './components/ui/LoadingSpinner'
 
@@ -16,22 +17,25 @@ function App() {
 
   return (
     <Router>
-      <Navbar />
-      <main className="container mt-3 pb-5">
-        <Suspense fallback={<LoadingSpinner />}>
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/auth" replace />} />
-            <Route path="/career" element={user ? <CareerAI /> : <Navigate to="/auth" replace />} />
-            <Route path="/auth" element={!user ? <Auth /> : <Navigate to="/dashboard" replace />} />
-          </Routes>
-        </Suspense>
-      </main>
-      {user && (
-        <Suspense fallback={null}>
-          <AiTerminalWidget />
-        </Suspense>
-      )}
+      <div className="d-flex flex-column min-vh-100">
+        <Navbar />
+        <main className="container mt-3 pb-4 flex-grow-1">
+          <Suspense fallback={<LoadingSpinner />}>
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/auth" replace />} />
+              <Route path="/career" element={user ? <CareerAI /> : <Navigate to="/auth" replace />} />
+              <Route path="/auth" element={!user ? <Auth /> : <Navigate to="/dashboard" replace />} />
+            </Routes>
+          </Suspense>
+        </main>
+        <Footer />
+        {user && (
+          <Suspense fallback={null}>
+            <AiTerminalWidget />
+          </Suspense>
+        )}
+      </div>
     </Router>
   )
 }

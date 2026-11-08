@@ -943,6 +943,52 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-muted);
 }
 
+.astra-form-input.astra-input-invalid {
+  border-color: rgba(244, 63, 94, 0.7) !important;
+  box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.14);
+}
+
+.astra-form-input.astra-input-valid {
+  border-color: rgba(16, 185, 129, 0.55) !important;
+}
+
+.astra-field-error {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #fda4af;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-top: 0.38rem;
+  line-height: 1.3;
+}
+
+.astra-password-strength {
+  width: 100%;
+}
+
+.astra-strength-bars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.35rem;
+}
+
+.astra-strength-bar {
+  height: 4px;
+  border-radius: 999px;
+  transition: background-color 0.25s ease;
+}
+
+.astra-strength-hint {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.astra-strength-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
 .astra-password-toggle {
   position: absolute;
   right: 10px;
@@ -1092,6 +1138,172 @@ select.astra-form-input option {
   color: var(--text-primary) !important;
 }
 
+/* ─── Application Footer ──────────────────────────────────────── */
+.astra-footer {
+  background: rgba(11, 15, 25, 0.94);
+  border-top: 1px solid var(--border-subtle);
+  padding: 2.75rem 0 1.75rem;
+  margin-top: 3rem;
+}
+
+.astra-footer-container {
+  max-width: 1140px !important;
+  margin: 0 auto;
+  padding-left: 1.25rem !important;
+  padding-right: 1.25rem !important;
+}
+
+.astra-footer-grid {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr 1fr 1fr;
+  gap: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.astra-footer-brand-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.astra-footer-brand {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.03em;
+  color: var(--text-primary) !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.85rem;
+}
+
+.astra-footer-desc {
+  color: var(--text-secondary);
+  font-size: 0.83rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  max-width: 320px;
+}
+
+.astra-footer-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #6ee7b7;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+}
+
+.astra-footer-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.astra-footer-heading {
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-primary);
+  margin-bottom: 0.9rem;
+}
+
+.astra-footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.astra-footer-link,
+.astra-footer-link-btn {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-secondary);
+  font-size: 0.83rem;
+  font-weight: 500;
+  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.18s ease, transform 0.18s ease;
+  text-align: left;
+}
+
+.astra-footer-link:hover,
+.astra-footer-link-btn:hover {
+  color: var(--accent-primary-light);
+  transform: translateX(2px);
+}
+
+.astra-footer-bottom {
+  padding-top: 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.astra-footer-copy {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.astra-footer-bottom-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+}
+
+.astra-footer-bottom-link {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.astra-footer-bottom-link:hover {
+  color: var(--accent-primary-light);
+}
+
+.astra-footer-top-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.73rem;
+  font-weight: 700;
+  padding: 0.28rem 0.65rem;
+  border-radius: 6px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.astra-footer-top-btn:hover {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: var(--accent-primary-light);
+}
+
 /* ─── Scrollbars & Utility Animations ───────────────────────── */
 .custom-scrollbar::-webkit-scrollbar {
   width: 5px;
@@ -1157,7 +1369,11 @@ select.astra-form-input option {
     border-radius: var(--radius-sm);
   }
   .astra-page {
-    padding: 1.5rem 0.25rem 3.5rem;
+    padding: 1.5rem 0.25rem 2.5rem;
+  }
+  .astra-footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem;
   }
 }
 
@@ -1235,12 +1451,30 @@ select.astra-form-input option {
 }
 
 @media (max-width: 575.98px) {
-  .astra-nav-container {
+  .astra-nav-container,
+  .astra-footer-container {
     padding-left: 0.9rem !important;
     padding-right: 0.9rem !important;
   }
   .astra-page {
-    padding: 1rem 0 4.5rem;
+    padding: 1rem 0 2rem;
+  }
+  .astra-footer {
+    padding: 2rem 0 5rem;
+    margin-top: 2rem;
+  }
+  .astra-footer-grid {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+    padding-bottom: 1.5rem;
+  }
+  .astra-footer-desc {
+    max-width: 100%;
+  }
+  .astra-footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
   }
   .astra-page-subtitle {
     font-size: 0.85rem;
